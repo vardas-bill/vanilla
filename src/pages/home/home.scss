@@ -1,0 +1,80 @@
+.ios, .md {
+
+  /*
+  .home-toolbar {
+    background-color: transparent;
+  }
+  */
+  page-home {
+
+    background-color: transparent;
+
+    .content-background {
+      background-image: url($company-home-page-background-image);
+      background-size: cover;
+      height: 105%;
+      margin-top: -20px;
+      z-index: 0;
+    }
+
+    .top-row-container {
+      padding-top: 20vh;
+      width: 100%;
+    }
+
+    .middle-row-container {
+
+    }
+
+    .inner-middle-row-container {
+    }
+
+    .bottom-row-container {
+      width: 100%;
+    }
+
+    .top-category, .bottom-category {
+      margin-left: auto;
+      margin-right: auto;
+      padding: 10px;
+      width: 34vw;
+      height: 33vw;
+      max-height: 33vw;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-position: center;
+      background-size: 33vw;
+      background-repeat: no-repeat;
+      font-weight: 400;
+      word-spacing: 30000px;
+      //opacity: 0.6;
+    }
+
+    .left-category, .right-category, .middle-category {
+      float: left;
+      padding: 10px;
+      width: 33vw;
+      height: 33vw;
+      max-height: 33vw;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-position: center;
+      background-size: 33vw;
+      background-repeat: no-repeat;
+      font-weight: 400;
+      word-spacing: 30000px;
+      //opacity: 0.6;
+    }
+
+    .middle-category {
+      width: 34vw;
+      //background-color: white;
+      //color: black;
+      opacity: 1.0
+    }
+  }
+}

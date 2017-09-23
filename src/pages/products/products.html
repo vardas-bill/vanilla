@@ -1,0 +1,164 @@
+<ion-header>
+
+  <ion-navbar>
+
+    <ion-title class="page-title">
+      {{pageTitle}}
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button class="navbar_right_button" (click)="companyTwitter()">
+        <ion-icon name="logo-twitter"></ion-icon>
+      </button>
+      <button ion-button class="navbar_right_button" (click)="companyFacebook()">
+        <img src="assets/img/fb-icon.png" class="navbar-fb-icon">
+      </button>
+      <button *ngIf="adminMode" ion-button icon-only (click)="addItem()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="background">
+
+  <ion-spinner *ngIf="showLoadingSpinner" color="white" class="loading-spinner" name="crescent"></ion-spinner>
+
+  <ion-row class="layout-style-buttons-row">
+    <ion-col col-4 text-center>
+      <button ion-button class="layout-style-button" small icon-left (click)="showAsCards()">
+        CARDS &nbsp; <ion-icon name="ios-photos"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-4 text-center>
+      <button ion-button class="layout-style-button" small icon-left (click)="showAsList()">
+        LIST &nbsp; <ion-icon name="md-list"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-4 text-center>
+      <button ion-button class="layout-style-button" small icon-left (click)="showAsGrid()">
+        GRID &nbsp; <ion-icon name="md-grid"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
+
+
+  <!-- CARDS VIEW -->
+  <div *ngIf="showProducts && showCards">
+    <ion-card *ngFor="let item of dataItems; let i = index">
+
+      <ion-item>
+        <ion-avatar item-left>
+          <div *ngIf="itemImage[i].type == 'PHOTO'">
+            <img [src]="itemImage[i].media">
+          </div>
+        </ion-avatar>
+        <div class="card-title">{{item.title}}</div>
+        <div class="card-date">{{item.updated}}</div>
+      </ion-item>
+
+      <img [src]="itemImage[i].media">
+
+      <ion-card-content>
+        <p>{{item.description}}</p>
+      </ion-card-content>
+
+      <ion-row>
+        <ion-col>
+          <button ion-button color="primary" clear small icon-left>
+            <ion-icon name='thumbs-up'></ion-icon>
+            12 Likes
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button color="primary" clear small icon-left>
+            <ion-icon name='text'></ion-icon>
+            4 Comments
+          </button>
+        </ion-col>
+        <ion-col center text-center>
+          <ion-note>
+            11h ago
+          </ion-note>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </div>
+
+
+  <!-- LIST VIEW -->
+  <ion-list *ngIf="showProducts && showList" class="list-items">
+
+    <ion-item-sliding *ngFor="let item of dataItems; let i = index" class="list-item">
+      <div ion-item (click)="openItem(item, itemImage[i])">
+        <div *ngIf="itemImage[i].type == 'PHOTO'">
+          <img [src]="itemImage[i].media" class="list-item-image">
+        </div>
+        <div class="list-item-text-div">
+          <div class="list-title">{{item.title}}</div>
+          <div class="list-description">{{item.description}}</div>
+        </div>
+      </div>
+
+      <ion-item-options>
+        <button ion-button color="danger" (click)="deleteItem(item)">
+          {{ 'DELETE_BUTTON' | translate }}
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+
+
+  <!-- GRID LAYOUT STYLE -->
+  <ion-grid *ngIf="showGrid">
+    <ion-row>
+      <ion-col col-6 col-md-4 col-xl-3 *ngFor="let item of dataItems; let i = index">
+        <div *ngIf="itemImage[i].type == 'PHOTO'" (click)="openItem(item, itemImage[i])">
+          <img [src]="itemImage[i].media">
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!--
+  <ion-card *ngFor="let item of cardItems">
+
+    <ion-item>
+      <ion-avatar item-left>
+        <img [src]="item.user.avatar">
+      </ion-avatar>
+      <h2>{{item.user.name}}</h2>
+      <p>{{item.date}}</p>
+    </ion-item>
+
+    <img [src]="item.image">
+
+    <ion-card-content>
+      <p>{{item.content}}</p>
+    </ion-card-content>
+
+    <ion-row>
+      <ion-col>
+        <button ion-button color="primary" clear small icon-left>
+            <ion-icon name='thumbs-up'></ion-icon>
+            12 Likes
+          </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button color="primary" clear small icon-left>
+            <ion-icon name='text'></ion-icon>
+            4 Comments
+          </button>
+      </ion-col>
+      <ion-col center text-center>
+        <ion-note>
+          11h ago
+        </ion-note>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+  -->
+</ion-content>
