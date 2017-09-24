@@ -14,6 +14,8 @@ import { DO_LOGIN,
   PRODUCT_DB_NAME,
   COUCHDB_SERVER,
   COUCHDB_SERVER_URL,
+  COUCHDB_USER,
+  COUCHDB_PASSWORD,
   REMOTE_SERVER,
   SKIP_SECURESTORAGE,
   ENCRYPT_DATA } from '../app/app.settings';
@@ -22,7 +24,7 @@ import * as moment from 'moment';
 
 
 /*
- Provider for all database stuff
+ Provider for user read only access to the product database
  Uses PouchDB/CouchDB:
  https://pouchdb.com/
  http://couchdb.apache.org/
@@ -37,7 +39,6 @@ export class DataProvider {
   _productDB:                 any;
   _remoteProductDB:           any;
   encryptKey:                 string = '';
-  _syncHandler:               any = null;
   remote:                     any;
   syncHandler:                any;
 
@@ -109,15 +110,17 @@ export class DataProvider {
 
         console.log('DataProvider: init(): getDBPaths gave = ' + JSON.stringify(paths));
       }
-      else { // This needed for testing with ionic serve when there is not any localstorage
+      else { // This needed for testing with ionic serve when running locally on webserver when there is not any localstorage
         localUserDBName = "a@a.com";
+
+        // If we are running the login version of the App use the SuperLogin server paths
         if (DO_LOGIN) {
           remoteUserDBName = "http://SDAaphrRTlm7Fg0J9sFHhA:W7oft_IsTtaZmOZ04Q0Tdg@localhost:5984/vanilla$a(40)a(2e)com";
           remoteProductDBName = "http://SDAaphrRTlm7Fg0J9sFHhA:W7oft_IsTtaZmOZ04Q0Tdg@localhost:5984/product";
         }
         else {
           remoteUserDBName = null;
-          remoteProductDBName = "http://localhost:5984/product";
+          remoteProductDBName = "http://localhost:5984/" + PRODUCT_DB_NAME;
         }
         console.log('DataProvider: init(): getDBPaths returned false. Using paths remoteUserDBName = ' + remoteUserDBName + ', remoteProductDBName = ' + remoteProductDBName);
 
@@ -137,7 +140,17 @@ export class DataProvider {
 
       console.log('Data: init(): real remoteProductDB path being used is: ' + realRemoteProductDB);
 
-      this._remoteProductDB = new PouchDB(realRemoteProductDB);
+/*
+      let pouchDBRemoteOptions = {
+        skip_setup: true,
+        ajax: {
+          headers: {Authorization: 'Basic ' + window.btoa(COUCHDB_USER + ':' + COUCHDB_PASSWORD)}
+        }
+      };
+*/
+      let pouchDBRemoteOptions = {};
+
+      this._remoteProductDB = new PouchDB(realRemoteProductDB, pouchDBRemoteOptions);
 
       console.log('Data: init(): this._remoteProductDB = ' + JSON.stringify(this._remoteProductDB));
 
@@ -147,12 +160,12 @@ export class DataProvider {
         continuous: true
       };
 
-      this._productDB.sync(this._remoteProductDB) //No options here -> One time sync
+      this._productDB.replicate.from(this._remoteProductDB) //No options here -> One time sync
         .on('complete', (info) => {
           this.events.publish('SYNC_FINISHED', true); // Let login etc. know we have synced the product data
-          console.log('++++++ Data: init(): *productDB* first one time sync has completed about to do live syncing now');
+          console.log('++++++ Data: init(): *productDB* first one time replicate.from has completed about to do live syncing now');
           //this.events.publish('SYNC_FINISHED', true); // Let login etc. know we have synced the data
-          return this._productDB.sync(this._remoteProductDB, options) //Continous sync with options
+          return this._productDB.replicate.from(this._remoteProductDB, options) //Continous sync with options
             .on('complete', (info) => {
               console.log('***** DATA: init() *productDB* Complete: Handling syncing complete');
               console.dir(info);
@@ -162,7 +175,7 @@ export class DataProvider {
               console.dir(info);
             })
             .on('paused', (info) => {
-              console.log('***** DATA: init() *productDB* Paused: Handling syncing pause');
+              console.log('***** DATA: init() *productDB* Paused: Handling second replicate.from pause');
               console.dir(info);
             })
             .on('active', (info) => {
@@ -170,21 +183,21 @@ export class DataProvider {
               console.dir(info);
             })
             .on('error', (err) => {
-              console.log('***** DATA: init() *productDB* Error: Handling syncing error');
+              console.log('***** DATA: init() *productDB* Error: Handling second replicate.from error');
               console.dir(err);
             })
             .on('denied', (err) => {
-              console.log('***** DATA: init() *productDB* Denied: Handling syncing denied');
+              console.log('***** DATA: init() *productDB* Denied: Handling second replicate from denied');
               console.dir(err);
             });
         })
         .on('error', (err) => {
-          console.log('ERROR ***** DATA: init() *productDB* Error: First Sync: Handling syncing error');
+          console.log('ERROR ***** DATA: init() *productDB* Error: First replicate.from: Handling error');
           console.dir(err);
           this.events.publish('SYNC_FINISHED', false); // Let login etc. know sync failed
         })
         .on('denied', (err) => {
-          console.log('DENIED ***** DATA: init() *productDB* Denied: First Sync: Handling syncing denied');
+          console.log('DENIED ***** DATA: init() *productDB* Denied: First replicate.from: Handling denied');
           console.dir(err);
         });
 
@@ -193,6 +206,7 @@ export class DataProvider {
       // [2] Connect to the user's private database (for user settings, bookmarks, profile, etc.)
       //
       // Only do this if users have to login
+      //
       if (DO_LOGIN) {
         this._userDB = new PouchDB(localUserDBName);
 
@@ -262,45 +276,6 @@ export class DataProvider {
 
   //=====================
   // ITEMS
-
-  addItem(data)
-  // Add a new item (e.g. a product or service)
-  {
-    console.log('Data: addItem(): called with data = ' + JSON.stringify(data));
-
-    let timeStamp = new Date().toISOString();
-    let item = {
-      _id: 'ITEM:' + timeStamp,
-      itemType: data.itemType.toLowerCase(),
-      title: data.title,
-      productID: data.productID,
-      description: data.description,
-      size: data.size,
-      price: data.price,
-      currency: data.currency,
-      media: data.media,         // An array of IDs for the associated media texts, images, audio, etc.
-      flagged: data.flagged,
-      specialOffer: data.specialOffer,
-      offerDescription: data.offerDescription,
-      created: timeStamp,
-      updated: timeStamp
-    };
-
-    var encryptedData = this.encryptData(item);
-    console.log('Data: addItem(): Completed encryption of item. encryptedData = ' + JSON.stringify(encryptedData));
-
-    return this._productDB.put(encryptedData)
-      .then(function (response) {
-        console.log('Data: addItem(): Put returned - ' + JSON.stringify(response));
-        return response.id;
-      })
-      .catch((err) => {
-        console.log('ERROR: Data: addItem(): Error: ' + err);
-        return false;
-      });
-  }
-
-
 
   getItem(id)
   // Get a specific item
@@ -375,6 +350,45 @@ export class DataProvider {
 
 
 
+  addItem(data)
+  // Add a new item (e.g. a product or service)
+  {
+    console.log('Data: addItem(): called with data = ' + JSON.stringify(data));
+
+    let timeStamp = new Date().toISOString();
+    let item = {
+      _id: 'ITEM:' + timeStamp,
+      itemType: data.itemType.toLowerCase(),
+      title: data.title,
+      productID: data.productID,
+      description: data.description,
+      size: data.size,
+      price: data.price,
+      currency: data.currency,
+      media: data.media,         // An array of IDs for the associated media texts, images, audio, etc.
+      flagged: data.flagged,
+      specialOffer: data.specialOffer,
+      offerDescription: data.offerDescription,
+      created: timeStamp,
+      updated: timeStamp
+    };
+
+    var encryptedData = this.encryptData(item);
+    console.log('Data: addItem(): Completed encryption of item. encryptedData = ' + JSON.stringify(encryptedData));
+
+    return this._productDB.put(encryptedData)
+      .then(function (response) {
+        console.log('Data: addItem(): Put returned - ' + JSON.stringify(response));
+        return response.id;
+      })
+      .catch((err) => {
+        console.log('ERROR: Data: addItem(): Error: ' + err);
+        return false;
+      });
+  }
+
+
+
   updateItem(itemData:any)//id, title, important, steps, people)
   // Amend an existing item
   {
@@ -437,7 +451,6 @@ export class DataProvider {
         return(false);
       });
   }
-
 
 
 
@@ -741,88 +754,6 @@ export class DataProvider {
    updated:		datetime
    */
 
-  addAnnotation(type, text, attachment)
-  // Add a new annotation
-  {
-
-    // :TO DO: Add appropriate media types for Android (check latest PowerUp
-
-    console.log('Data: addAnnotation() called with type = ' + type + ', and attachment = ' + JSON.stringify(attachment));
-    /*
-    let attachmentData: any;
-    let base64String:   any;
-    switch (type) {
-      case 'PHOTO':
-        attachmentData = {
-          "annotation.jpg" : {
-            content_type 	: 'image/jpeg',
-            data 			    : attachment
-          }
-        };
-        //console.log('Data: addAnnnotation: PHOTO attachment is:  ' + attachmentData);
-        break;
-
-      case 'VIDEO':
-        attachmentData = {
-          "annotation.mov" : {
-            content_type 	: 'video/quicktime',
-            data 			    : attachment
-          }
-        };
-        //console.log('Data: addAnnnotation: VIDEO attachment is:  ' + JSON.stringify(attachmentData));
-        break;
-
-      case 'AUDIO':
-        attachmentData = {
-          "annotation.wav" : {
-            content_type 	: 'audio/wav',
-            data 			    : attachment
-          }
-        };
-        //console.log('addAnnnotation: AUDIO attachment is:  ' + JSON.stringify(attachmentData));
-        break;
-
-      case 'TEXT':
-        console.log('addAnnnotation: processing attachmentType TEXT');
-        attachmentData = {
-
-        };
-        break;
-
-      default:
-        console.log('addAnnnotation: processing attachmentType none');
-        attachmentData = {
-
-        };
-        break;
-
-    }
-    */
-
-    let timeStamp = new Date().toISOString();
-    let annotation = {
-      _id: 'ANNOTATION:' + timeStamp,
-      type: type,
-      text: text,
-      media: attachment,
-      //_attachments: attachmentData,
-      created: timeStamp,
-      updated: timeStamp
-    };
-
-    console.log('addAnnotation: About to put: ' + JSON.stringify(annotation));
-    return this._productDB.put(annotation)
-      .then(function (response) {
-        console.log('addAnnotation: Put returned - ' + JSON.stringify(response));
-        return response.id;
-      })
-      .catch((err) => {
-        console.log('addAnnotation: Error: ' + err);
-        return false;
-      });
-  }
-
-
 
   getAnnotation(id)
   // Gets a specific annotation
@@ -1022,6 +953,89 @@ export class DataProvider {
 
 
 
+  addAnnotation(type, text, attachment)
+  // Add a new annotation
+  {
+
+    // :TO DO: Add appropriate media types for Android (check latest PowerUp
+
+    console.log('Data: addAnnotation() called with type = ' + type + ', and attachment = ' + JSON.stringify(attachment));
+    /*
+     let attachmentData: any;
+     let base64String:   any;
+     switch (type) {
+     case 'PHOTO':
+     attachmentData = {
+     "annotation.jpg" : {
+     content_type 	: 'image/jpeg',
+     data 			    : attachment
+     }
+     };
+     //console.log('Data: addAnnnotation: PHOTO attachment is:  ' + attachmentData);
+     break;
+
+     case 'VIDEO':
+     attachmentData = {
+     "annotation.mov" : {
+     content_type 	: 'video/quicktime',
+     data 			    : attachment
+     }
+     };
+     //console.log('Data: addAnnnotation: VIDEO attachment is:  ' + JSON.stringify(attachmentData));
+     break;
+
+     case 'AUDIO':
+     attachmentData = {
+     "annotation.wav" : {
+     content_type 	: 'audio/wav',
+     data 			    : attachment
+     }
+     };
+     //console.log('addAnnnotation: AUDIO attachment is:  ' + JSON.stringify(attachmentData));
+     break;
+
+     case 'TEXT':
+     console.log('addAnnnotation: processing attachmentType TEXT');
+     attachmentData = {
+
+     };
+     break;
+
+     default:
+     console.log('addAnnnotation: processing attachmentType none');
+     attachmentData = {
+
+     };
+     break;
+
+     }
+     */
+
+    let timeStamp = new Date().toISOString();
+    let annotation = {
+      _id: 'ANNOTATION:' + timeStamp,
+      type: type,
+      text: text,
+      media: attachment,
+      //_attachments: attachmentData,
+      created: timeStamp,
+      updated: timeStamp
+    };
+
+    console.log('addAnnotation: About to put: ' + JSON.stringify(annotation));
+    return this._productDB.put(annotation)
+      .then(function (response) {
+        console.log('addAnnotation: Put returned - ' + JSON.stringify(response));
+        return response.id;
+      })
+      .catch((err) => {
+        console.log('addAnnotation: Error: ' + err);
+        return false;
+      });
+  }
+
+
+
   updateAnnotation(id, type, text, media)
   // Amend an existing annotation
   {
@@ -1071,8 +1085,6 @@ export class DataProvider {
         return(false);
       });
   }
-
-
 
   b64toBlob(b64Data, contentType='', sliceSize=512)
   // NOT currently used

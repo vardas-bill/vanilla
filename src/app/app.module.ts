@@ -31,10 +31,12 @@ import { MediaProvider } from '../providers/media';
 import { ConnectivityService } from '../providers/connectivity-service';
 import { LocalStorageProvider } from '../providers/local-storage';
 import { CommonFunctionsProvider } from '../providers/common-functions';
+import { AdminDataProvider } from '../providers/admin-data';
 
 import { OneSignal } from '@ionic-native/onesignal';
 
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
+
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -71,6 +73,7 @@ export function entryComponents() {
   return pages;
 }
 
+/*
 export function providers() {
   return [
     AuthenticationProvider,
@@ -90,6 +93,7 @@ export function providers() {
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ];
 }
+*/
 
 @NgModule({
   declarations: declarations(),
@@ -104,6 +108,24 @@ export function providers() {
   ],
   bootstrap: [IonicApp],
   entryComponents: entryComponents(),
-  providers: providers()
+  providers: [
+    AuthenticationProvider,
+    DataProvider,
+    MediaProvider,
+    ConnectivityService,
+    LocalStorageProvider,
+    CommonFunctionsProvider,
+    AdminDataProvider,
+    AppVersion,
+    StatusBar,
+    SplashScreen,
+    NativeStorage,
+    CallNumber,
+    OneSignal,
+    Camera,
+    // Keep this to enable Ionic's runtime error handling during development
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    AdminDataProvider
+  ]
 })
 export class AppModule {}

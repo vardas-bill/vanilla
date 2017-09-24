@@ -6,10 +6,12 @@
 
 // LOCAL TEST SERVER (For testing via browser)
 
-export var SUPERLOGIN_SERVER = 'http://127.0.0.1:3000';
-export var COUCHDB_SERVER = 'http://127.0.0.1:5984';
-export var COUCHDB_SERVER_URL = '127.0.0.1:5984';
-export var REMOTE_SERVER = false;
+export const SUPERLOGIN_SERVER = 'http://127.0.0.1:3000';
+export const COUCHDB_SERVER = 'http://127.0.0.1:5984';
+export const COUCHDB_SERVER_URL = '127.0.0.1:5984';
+export const COUCHDB_PASSWORD = '';
+export const COUCHDB_USER = '';
+export const REMOTE_SERVER = false;
 
 
 // LOCAL TEST SERVER (For testing via App running on a device)
