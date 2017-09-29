@@ -49,6 +49,21 @@ export class HomePage {
       this.events.unsubscribe('SYNC_FINISHED', null);
       console.log('***** HomePage: constructor(): SYNC_FINISHED event received');
     });
+
+    // If local DB has data then we can let user proceed
+    this.events.subscribe('LOCALDB_READY', (finished) => {
+      // If the local DB has data we don't need to wait for a remote sync
+      this.dataProvider._productDB.info().then((result)=> {
+        if (result.doc_count > 0) {
+          this.showLoadingSpinner = false;
+          console.log('***** HomePage: constructor(): Local product DB doc count = ' + result.doc_count);
+        }
+      }).catch((err)=> {
+      });
+
+      this.events.unsubscribe('LOCALDB_READY', null);
+      console.log('***** HomePage: constructor(): LOCALDB_READY event received');
+    });
   }
 
   ionViewDidLoad() {
@@ -63,6 +78,9 @@ export class HomePage {
 
   goto(categoryButton)
   {
+    // Don't let user go to the product page until there is data to show
+    if (this.showLoadingSpinner) return;
+
     let info: any = {
       keyword: this.majorCategoryButton[categoryButton].keyword,
       name: this.majorCategoryButton[categoryButton].name,

@@ -14,6 +14,7 @@ import { CommonFunctionsProvider } from '../../providers/common-functions'
 export class ContactPage {
 
   appVersionNumber: any;
+  secretClickCount: number = 0;
 
   constructor(public callNumber: CallNumber,
               public commonFunctionsProvider: CommonFunctionsProvider,
@@ -36,6 +37,7 @@ export class ContactPage {
   ionViewDidEnter()
   {
     console.log('ContactsPage: ionViewDidEnter()');
+    this.secretClickCount = 0;
   }
 
 
@@ -49,6 +51,12 @@ export class ContactPage {
   }
 
 
+  countClicks()
+  {
+    this.secretClickCount++;
+
+    if (this.secretClickCount == 7) alert('Admin!');
+  }
 
   companyFacebook()
   {

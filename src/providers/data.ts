@@ -128,9 +128,14 @@ export class DataProvider {
 
 
       // ------------------------------------------------
-      // [1] First connect to the shared product database
+      // [1] First connect to local and remote product databases
       //
+
+      // Local PouchDB
       this._productDB = new PouchDB(localProductDBName);
+
+      // Let anyone who is interested know that they can access the local product DB
+      this.events.publish('LOCALDB_READY', true);
 
       console.log('Data: init(): PouchDB database opened for localProductDBName = ' + localProductDBName);
       console.log('Data: init(): this._productDB = ' + JSON.stringify(this._productDB));
@@ -140,7 +145,7 @@ export class DataProvider {
 
       console.log('Data: init(): real remoteProductDB path being used is: ' + realRemoteProductDB);
 
-/*
+/* Use this code if we authenticate accessing the product DB
       let pouchDBRemoteOptions = {
         skip_setup: true,
         ajax: {
@@ -150,6 +155,7 @@ export class DataProvider {
 */
       let pouchDBRemoteOptions = {};
 
+      // Remote CouchDB
       this._remoteProductDB = new PouchDB(realRemoteProductDB, pouchDBRemoteOptions);
 
       console.log('Data: init(): this._remoteProductDB = ' + JSON.stringify(this._remoteProductDB));
@@ -1086,6 +1092,7 @@ export class DataProvider {
       });
   }
 
+
   b64toBlob(b64Data, contentType='', sliceSize=512)
   // NOT currently used
   {
@@ -1274,125 +1281,6 @@ export class DataProvider {
     return data;
   }
 
-
-
-
-
-
-  //=============================================
-  // DATABASE SYNCING
-
-
-  handleChanges()
-  // Checks for changes to the database so we can update the user's current view
-  // NOTE: This code is not used yet
-  {
-    console.log('handleChanges called');
-
-    this._userDB.changes({
-      since: 'now',
-      live: true,
-      include_docs: true,
-      attachments: true
-    })
-      .on('change', (change) => {
-        // handle change
-        console.log('Handling change');
-        console.dir(change);
-      })
-      .on('complete', (info) => {
-        // changes() was canceled
-        console.log('Changes complete');
-        console.dir(info);
-      })
-      .on('error', (err) => {
-        console.log('Changes error');
-        console.log(err);
-      });
-  }
-
-
-
-
-
-
-
-/*
-  // NOT working on iPhone
-  getProfile(userID = null) {
-    let qString = userID ? userID : '0';
-
-    let headers = new Headers();
-    headers.append('Authorization', UserSession.getAccessToken());
-
-    let options = new RequestOptions({ headers: headers });
-
-    return new Promise(resolve => {
-      this.http.get(Config.API_ENDPOINT + 'api/profile/' + qString, options)
-        .map(res => res.json())
-        .subscribe(
-          (data: any) => {
-            resolve(data);
-          },
-          err => {
-            //alert("Error! failed: "+JSON.stringify(err));
-          },
-          () => {
-            //alert('Complete');
-          }
-        );
-    });
-  }
-
-  // WORKING on iPhone
-  getCategories(): Promise<any> {
-    let headers = new Headers();
-    headers.append('Authorization', UserSession.getAccessToken());
-
-    let options = new RequestOptions({ headers: headers });
-
-    return new Promise(resolve => {
-      this.http.get(Config.API_ENDPOINT + 'api/categories/', options)
-        .map(res => res.json())
-        .subscribe(
-          data => {
-            resolve(data);
-          },
-          err => {
-            console.log("Error! api/categories/ failed: " + JSON.stringify(err));
-          },
-          () => {
-
-          }
-        );
-    });
-  }
-
-
-
-  getProfile(userID = 0): Promise<any> {
-    let headers = new Headers();
-    headers.append('Authorization', UserSession.getAccessToken());
-
-    let options = new RequestOptions({ headers: headers });
-
-    return new Promise(resolve => {
-      this.http.get(Config.API_ENDPOINT + 'api/profile/' + userID, options)
-        .map(res => res.json())
-        .subscribe(
-          data => {
-            resolve(data);
-          },
-          err => {
-            console.log("Error! api/profile/ failed: " + JSON.stringify(err));
-          },
-          () => {
-
-          }
-        );
-    });
-  }
-  */
 }
 
 
