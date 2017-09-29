@@ -18,8 +18,7 @@
 
 
 <ion-content>
-  <div class="item-profile" text-center #profilePic [style.background-image]="'url(' + itemImage.media + ')'">
-  </div>
+  <img class="item-photo" [src]="itemImage.media">
 
   <div class="item-detail" padding>
     <h2>{{item.title}}</h2>
