@@ -128,10 +128,28 @@ export class VanillaApp {
         console.log('VanillaApp: NOT running on Cordova device');
       }
 
-      if (DO_LOGIN) this.nav.setRoot(WelcomePage);
+      if (DO_LOGIN) this.nav.setRoot(WelcomePage); // :TO DO: Check login stuff is still working!
       else {
         // If we aren't making users login we need to initialise the dataProvider here (rather than within the login code)
-        this.dataProvider.init();
+
+        // First check if user is an admin so we can call the DB init with the admin password
+        if (this.platform.is('cordova')) {
+          this.nativeStorage.getItem('adminPassword')
+            .then(
+              data => {
+                console.log('VanillaApp: Constructor: getItem("adminPassword"): get from local storage = ' + data);
+                if (data != "") this.dataProvider.init(data);
+                else this.dataProvider.init(null);
+              },
+              error => {
+                console.log('VanillaApp: Constructor: getItem("adminPassword"): get from local storage ERROR = ' + error);
+                this.dataProvider.init(null);
+              }
+            );
+        }
+        else {
+          this.dataProvider.init(null);
+        }
         //this.nav.setRoot(HomePage);
       }
     });

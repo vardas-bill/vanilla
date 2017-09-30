@@ -68,6 +68,8 @@ export class DataProvider {
 
 
   getDBPaths()
+  // This is used when using SuperLogin for user login
+  // SuperLogin uses urls with special authentication. These urls are stored in local storage
   {
     console.log('DataProvider: getDBPaths(): called.');
 
@@ -92,13 +94,16 @@ export class DataProvider {
   }
 
 
-  init()//localDBName, remoteDBName)
+  init(adminPassword:string = null)//localDBName, remoteDBName)
   // Initialises the database - Called every time the App starts or the user logs in or registers
+  // If adminPassword is not null init() will also replicate TO the remote DB to save changes made by an Admin user
   {
-    console.log('DataProvider: init() called');
+    console.log('DataProvider: init() called with adminPassword = ' + adminPassword);
 
     // Get the DB paths from local storage so we can open and sync to them
-    return this.getDBPaths().then((paths:any)=>{
+    // The paths are put in local storage if SuperLogin is being used for user login
+    // If SuperLogin is not being used, or we are not running on a device getBDPaths returns false
+    this.getDBPaths().then((paths:any)=>{
       console.log('Data: init(): getDBPaths returned = ' + JSON.stringify(paths));
 
       var localProductDBName = PRODUCT_DB_NAME;
@@ -110,10 +115,11 @@ export class DataProvider {
 
         console.log('DataProvider: init(): getDBPaths gave = ' + JSON.stringify(paths));
       }
-      else { // This needed for testing with ionic serve when running locally on webserver when there is not any localstorage
+      else { // This needed for testing with ionic serve when running LOCALLY on webserver when there is not any localstorage
         localUserDBName = "a@a.com";
 
         // If we are running the login version of the App use the SuperLogin server paths
+        // NOTE: These paths will need manually editing as the Superlogin authentication parts change over time
         if (DO_LOGIN) {
           remoteUserDBName = "http://SDAaphrRTlm7Fg0J9sFHhA:W7oft_IsTtaZmOZ04Q0Tdg@localhost:5984/vanilla$a(40)a(2e)com";
           remoteProductDBName = "http://SDAaphrRTlm7Fg0J9sFHhA:W7oft_IsTtaZmOZ04Q0Tdg@localhost:5984/product";
@@ -145,20 +151,25 @@ export class DataProvider {
 
       console.log('Data: init(): real remoteProductDB path being used is: ' + realRemoteProductDB);
 
-/* Use this code if we authenticate accessing the product DB
-      let pouchDBRemoteOptions = {
-        skip_setup: true,
-        ajax: {
-          headers: {Authorization: 'Basic ' + window.btoa(COUCHDB_USER + ':' + COUCHDB_PASSWORD)}
-        }
-      };
-*/
+      // ---------
+      // ADMIN bit
+      //
+      // Setup authentication options if user is admin
       let pouchDBRemoteOptions = {};
+      if (adminPassword != null) {
+        pouchDBRemoteOptions = {
+          skip_setup: true,
+          ajax: {
+            headers: {Authorization: 'Basic ' + window.btoa(PRODUCT_DB_NAME + ':' + adminPassword)}
+          }
+        };
+      }
 
-      // Remote CouchDB
+      // Attach to remote CouchDB
       this._remoteProductDB = new PouchDB(realRemoteProductDB, pouchDBRemoteOptions);
 
-      console.log('Data: init(): this._remoteProductDB = ' + JSON.stringify(this._remoteProductDB));
+      console.log('Data: init(): using pouchDBRemoteOptions = ' + JSON.stringify(pouchDBRemoteOptions) + ' this._remoteProductDB = ' + JSON.stringify(this._remoteProductDB));
+
 
       let options = {
         live: true,
@@ -166,12 +177,62 @@ export class DataProvider {
         continuous: true
       };
 
+      // If the user is an admin replicate TO the remoteDB so that new items, edited items, and deleted items can be saved
+      if (adminPassword != null) {
+        console.log('***** DATA: init() ADMIN so about to do a replicate.to');
+        this._productDB.replicate.to(this._remoteProductDB) //No options here -> One time sync
+          .on('complete', (info) => {
+            this.events.publish('ADMIN_SYNC_FINISHED', true); // Let login etc. know we have synced the product data
+            console.log('++++++ Data: init(): ADMIN *productDB* first one time replicate.from has completed about to do live syncing now');
+            //this.events.publish('SYNC_FINISHED', true); // Let login etc. know we have synced the data
+            this._productDB.replicate.to(this._remoteProductDB, options) //Continous sync with options
+              .on('complete', (info) => {
+                console.log('***** DATA: init() ADMIN *productDB* Complete: Handling syncing complete');
+                console.dir(info);
+              })
+              .on('change', (info) => {
+                console.log('***** DATA: init() ADMIN *productDB* Change: Handling syncing change');
+                console.dir(info);
+              })
+              .on('paused', (info) => {
+                console.log('***** DATA: init() ADMIN *productDB* Paused: Handling second replicate.from pause');
+                console.dir(info);
+              })
+              .on('active', (info) => {
+                console.log('***** DATA: init() ADMIN *productDB* Active: Handling syncing resumption');
+                console.dir(info);
+              })
+              .on('error', (err) => {
+                console.log('***** DATA: init() ADMIN *productDB* Error: Handling second replicate.from error');
+                this.events.publish('ADMIN_SYNC_FINISHED', false); // let anyone who is interested know that replicate to failed
+                console.dir(err);
+              })
+              .on('denied', (err) => {
+                console.log('***** DATA: init() ADMIN *productDB* Denied: Handling second replicate from denied');
+                this.events.publish('ADMIN_SYNC_FINISHED', false); // let anyone who is interested know that replicate to failed
+                console.dir(err);
+              });
+          })
+          .on('error', (err) => {
+            console.log('ERROR ***** DATA: init() ADMIN *productDB* Error: First replicate.from: Handling error');
+            console.dir(err);
+            this.events.publish('ADMIN_SYNC_FINISHED', false); // let anyone who is interested know that replicate to failed
+          })
+          .on('denied', (err) => {
+            console.log('DENIED ***** DATA: init() ADMIN *productDB* Denied: First replicate.from: Handling denied');
+            this.events.publish('ADMIN_SYNC_FINISHED', false); // let anyone who is interested know that replicate to failed
+            console.dir(err);
+          });
+      }
+
+
+      // Replicate from remote DB to local DB (do one off sync first (so we know when we have received all the data) then a live continuous sync)
       this._productDB.replicate.from(this._remoteProductDB) //No options here -> One time sync
         .on('complete', (info) => {
           this.events.publish('SYNC_FINISHED', true); // Let login etc. know we have synced the product data
           console.log('++++++ Data: init(): *productDB* first one time replicate.from has completed about to do live syncing now');
           //this.events.publish('SYNC_FINISHED', true); // Let login etc. know we have synced the data
-          return this._productDB.replicate.from(this._remoteProductDB, options) //Continous sync with options
+          this._productDB.replicate.from(this._remoteProductDB, options) //Continous sync with options
             .on('complete', (info) => {
               console.log('***** DATA: init() *productDB* Complete: Handling syncing complete');
               console.dir(info);
@@ -205,13 +266,14 @@ export class DataProvider {
         .on('denied', (err) => {
           console.log('DENIED ***** DATA: init() *productDB* Denied: First replicate.from: Handling denied');
           console.dir(err);
+          this.events.publish('SYNC_FINISHED', false); // Let login etc. know sync failed
         });
 
 
+
       // ------------
-      // [2] Connect to the user's private database (for user settings, bookmarks, profile, etc.)
+      // [2] If doing user login connect to the user's private database (for user settings, bookmarks, profile, etc.)
       //
-      // Only do this if users have to login
       //
       if (DO_LOGIN) {
         this._userDB = new PouchDB(localUserDBName);

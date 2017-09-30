@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar class="product-navbar">
 
     <ion-title class="page-title">
       {{pageTitle}}
@@ -97,15 +97,18 @@
         <div *ngIf="itemImage[i].type == 'PHOTO'">
           <img [src]="itemImage[i].media" class="list-item-image">
         </div>
-        <div class="list-item-text-div">
-          <div class="list-title">{{item.title}}</div>
-          <div class="list-description">{{item.description}}</div>
-        </div>
+        <span class="list-item-text-div">
+          <span class="list-title">{{item.title}}</span>
+          <span class="list-description">{{item.description}}</span>
+        </span>
       </div>
 
-      <ion-item-options>
+      <ion-item-options *ngIf="userIsAdmin">
         <button ion-button color="danger" (click)="deleteItem(item)">
-          {{ 'DELETE_BUTTON' | translate }}
+          DELETE
+        </button>
+        <button ion-button color="normal" (click)="editItem(item)">
+          EDIT
         </button>
       </ion-item-options>
     </ion-item-sliding>

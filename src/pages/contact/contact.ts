@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, App, Platform} from 'ionic-angular';
+import { NavController, AlertController, App, Platform} from 'ionic-angular';
 
 import { CallNumber } from '@ionic-native/call-number';
 import { AppVersion } from '@ionic-native/app-version';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 import { CommonFunctionsProvider } from '../../providers/common-functions'
 
@@ -19,7 +20,9 @@ export class ContactPage {
   constructor(public callNumber: CallNumber,
               public commonFunctionsProvider: CommonFunctionsProvider,
               public appVersion: AppVersion,
+              public nativeStorage: NativeStorage,
               public platform: Platform,
+              public alertCtrl: AlertController,
               public navCtrl: NavController) {
 
     if (this.platform.is('cordova')) {
@@ -55,7 +58,40 @@ export class ContactPage {
   {
     this.secretClickCount++;
 
-    if (this.secretClickCount == 7) alert('Admin!');
+    // Seven clicks means this might be an admin user
+    if (this.secretClickCount == 7) {
+      this.secretClickCount = 0;
+      let prompt = this.alertCtrl.create({
+        title: 'Password',
+        message: "Enter password to access additional features",
+        inputs: [
+          {
+            name: 'password',
+            placeholder: 'password'
+          },
+        ],
+        buttons: [
+          {
+            text: 'Cancel',
+            handler: data => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'Save Password',
+            handler: data => {
+              alert('Password = ' + data.password);
+              this.nativeStorage.setItem('adminPassword', data.password)
+                .then(
+                  () => {},
+                  error => {}
+                );
+            }
+          }
+        ]
+      });
+      prompt.present();
+    }
   }
 
   companyFacebook()

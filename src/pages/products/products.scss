@@ -2,6 +2,11 @@
 
   page-products {
 
+    .product-navbar {
+      //border-top: 5px solid white;
+      //height: 90px !important;
+    }
+
     .background {
       //background-image: url($company-home-page-background-image);
       background-color: $company-product-page-background-color;//#3F434C;
@@ -49,10 +54,11 @@
       margin-right: 10px;
     }
     .list-item-text-div {
-      white-space: nowrap;
-
+      //white-space: nowrap;
+      //max-width: 50%;
     }
     .list-title {
+      display: block;
       margin-top: 6px;
       font-weight: 100;
       font-size: 16px;
@@ -61,6 +67,7 @@
       font-size: 11px;
       font-weight: 100;
       padding-top: 4px;
+      text-overflow: ellipsis;
     }
 
 

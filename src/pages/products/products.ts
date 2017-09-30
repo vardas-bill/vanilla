@@ -39,7 +39,7 @@ export class ProductsPage {
   name: string;
   pageTitle: string;
 
-  adminMode: boolean = true;
+  userIsAdmin: boolean = true;
 
 
   constructor(public navCtrl: NavController,

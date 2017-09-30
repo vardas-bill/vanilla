@@ -59,6 +59,7 @@ export class HomePage {
           console.log('***** HomePage: constructor(): Local product DB doc count = ' + result.doc_count);
         }
       }).catch((err)=> {
+        console.log('***** HomePage: ERROR constructor(): _productDB.info() = ' + err);
       });
 
       this.events.unsubscribe('LOCALDB_READY', null);

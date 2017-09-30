@@ -5,22 +5,24 @@
 
 
 // LOCAL TEST SERVER (For testing via browser)
-
+/*
 export const SUPERLOGIN_SERVER = 'http://127.0.0.1:3000';
 export const COUCHDB_SERVER = 'http://127.0.0.1:5984';
 export const COUCHDB_SERVER_URL = '127.0.0.1:5984';
 export const COUCHDB_PASSWORD = '';
 export const COUCHDB_USER = '';
 export const REMOTE_SERVER = false;
+*/
 
 
 // LOCAL TEST SERVER (For testing via App running on a device)
-/*
 export var SUPERLOGIN_SERVER = 'http://fa7c4ed1.ngrok.io';
-export var COUCHDB_SERVER = 'http://1966ece9.ngrok.io';
-export var COUCHDB_SERVER_URL = '1966ece9.ngrok.io';
+export var COUCHDB_SERVER = 'http://fd6cbc73.ngrok.io';
+export var COUCHDB_SERVER_URL = 'fd6cbc73.ngrok.io';
 export var REMOTE_SERVER = false;
-*/
+export const COUCHDB_PASSWORD = '';
+export const COUCHDB_USER = '';
+
 
 // AWS TEST SERVER
 /*
@@ -59,7 +61,7 @@ export const PRODUCT_CATEGORY6_SUBCATEGORIES = [];
 export const MAJOR_CATEGORY_BUTTON = [
   {'name':'Craft Beer', 'keyword':'beer', 'pageTitle':'Craft Beers', 'backgroundColor': '#90D5D2', 'textColor': 'black', 'image': ''},
   {'name':'Craft Lager', 'keyword':'lager', 'pageTitle':'Craft Lager', 'backgroundColor': '#89B3B2', 'textColor': 'black', 'image': ''},
-  {'name':'', 'keyword':'ALL', 'pageTitle':'Our Craft Products', 'backgroundColor': '#343440', 'textColor': 'black', 'image': '../assets/img/square_logo.png'},
+  {'name':'', 'keyword':'ALL', 'pageTitle':'Our Craft Products', 'backgroundColor': '#343440', 'textColor': 'black', 'image': 'assets/img/square_logo.png'},
   {'name':'Craft Water', 'keyword':'water', 'pageTitle':'Craft Water', 'backgroundColor': '#BED3B2', 'textColor': 'black', 'image': ''},
   {'name':'Craft Whisky', 'keyword':'whisky', 'pageTitle':'Craft Whisky', 'backgroundColor': '#F79087', 'textColor': 'black', 'image': ''}
 ]
