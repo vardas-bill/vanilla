@@ -13,6 +13,22 @@ page-item-detail {
     position: absolute;
   }
 
+  .price-section {
+    margin-top: 4px;
+  }
+
+  .special-offer-heading {
+    margin-top: 16px;
+    color: $special-offer-heading-color;
+    font-size: 16px;
+    font-weight: 600;
+    //float: left;
+  }
+  .special-offer-description {
+    //float: left;
+    margin-top: 4px;
+  }
+
   .comments-container {
     border-top-style: solid;
     border-top-width: 2px;

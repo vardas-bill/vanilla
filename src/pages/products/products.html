@@ -29,18 +29,18 @@
 
   <ion-row class="layout-style-buttons-row">
     <ion-col col-4 text-center>
-      <button ion-button class="layout-style-button" small icon-left (click)="showAsCards()">
+      <button [style.opacity]="showCards ? '1.0':'0.5'" ion-button class="layout-style-button" small icon-left (click)="showAsCards()">
         CARDS &nbsp; <ion-icon name="ios-photos"></ion-icon>
       </button>
     </ion-col>
     <ion-col col-4 text-center>
-      <button ion-button class="layout-style-button" small icon-left (click)="showAsList()">
+      <button [style.opacity]="showList ? '1.0':'0.5'" ion-button class="layout-style-button" small icon-left (click)="showAsList()">
         LIST &nbsp; <ion-icon name="md-list"></ion-icon>
       </button>
     </ion-col>
     <ion-col col-4 text-center>
-      <button ion-button class="layout-style-button" small icon-left (click)="showAsGrid()">
-        GRID &nbsp; <ion-icon name="md-grid"></ion-icon>
+      <button [style.opacity]="showGrid ? '1.0':'0.5'" ion-button class="layout-style-button" small icon-left (click)="showAsGrid()">
+        IMAGES &nbsp; <ion-icon name="md-grid"></ion-icon>
       </button>
     </ion-col>
   </ion-row>
