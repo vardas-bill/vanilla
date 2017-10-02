@@ -31,7 +31,6 @@ import { MediaProvider } from '../providers/media';
 import { ConnectivityService } from '../providers/connectivity-service';
 import { LocalStorageProvider } from '../providers/local-storage';
 import { CommonFunctionsProvider } from '../providers/common-functions';
-import { AdminDataProvider } from '../providers/admin-data';
 
 import { OneSignal } from '@ionic-native/onesignal';
 
@@ -115,7 +114,6 @@ export function providers() {
     ConnectivityService,
     LocalStorageProvider,
     CommonFunctionsProvider,
-    AdminDataProvider,
     AppVersion,
     StatusBar,
     SplashScreen,
@@ -124,8 +122,7 @@ export function providers() {
     OneSignal,
     Camera,
     // Keep this to enable Ionic's runtime error handling during development
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
-    AdminDataProvider
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
 export class AppModule {}

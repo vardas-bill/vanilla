@@ -15,6 +15,7 @@ import { WelcomePage } from '../pages/welcome/welcome';
 
 import { DataProvider } from '../providers/data';
 import { AuthenticationProvider } from '../providers/authentication';
+import { CommonFunctionsProvider } from '../providers/common-functions';
 import { ConnectivityService } from '../providers/connectivity-service';
 
 import { OneSignal } from '@ionic-native/onesignal';
@@ -35,11 +36,13 @@ export class VanillaApp {
 
 
   appVersionNumber:   string = '';
+  isAdminUser: boolean = false;
 
   constructor(public translate: TranslateService,
               public platform: Platform,
               public statusBar: StatusBar,
               public splashScreen: SplashScreen,
+              public commonFunctionsProvider: CommonFunctionsProvider,
               public dataProvider: DataProvider,
               public authenticationProvider: AuthenticationProvider,
               public nativeStorage: NativeStorage,
@@ -138,11 +141,18 @@ export class VanillaApp {
             .then(
               data => {
                 console.log('VanillaApp: Constructor: getItem("adminPassword"): get from local storage = ' + data);
-                if (data != "") this.dataProvider.init(data);
-                else this.dataProvider.init(null);
+                if (data != "") {
+                  this.commonFunctionsProvider.isAdminUser = true;
+                  this.dataProvider.init(data);
+                }
+                else {
+                  this.commonFunctionsProvider.isAdminUser = false;
+                  this.dataProvider.init(null);
+                }
               },
               error => {
                 console.log('VanillaApp: Constructor: getItem("adminPassword"): get from local storage ERROR = ' + error);
+                this.commonFunctionsProvider.isAdminUser = false;
                 this.dataProvider.init(null);
               }
             );

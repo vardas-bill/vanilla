@@ -13,7 +13,7 @@
       <button ion-button class="navbar_right_button" (click)="companyFacebook()">
         <img src="assets/img/fb-icon.png" class="navbar-fb-icon">
       </button>
-      <button *ngIf="adminMode" ion-button icon-only (click)="addItem()">
+      <button *ngIf="isAdminUser" ion-button icon-only (click)="addItem()">
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>
@@ -57,7 +57,7 @@
           </div>
         </ion-avatar>
         <div class="card-title">{{item.title}}</div>
-        <div class="card-date">{{item.updated}}</div>
+        <div class="card-date">Added: {{item.updated}}</div>
       </ion-item>
 
       <img [src]="itemImage[i].media">
@@ -66,6 +66,7 @@
         <p>{{item.description}}</p>
       </ion-card-content>
 
+      <!--
       <ion-row>
         <ion-col>
           <button ion-button color="primary" clear small icon-left>
@@ -85,6 +86,7 @@
           </ion-note>
         </ion-col>
       </ion-row>
+      -->
     </ion-card>
   </div>
 
@@ -103,7 +105,7 @@
         </span>
       </div>
 
-      <ion-item-options *ngIf="userIsAdmin">
+      <ion-item-options *ngIf="isAdminUser">
         <button ion-button color="danger" (click)="deleteItem(item)">
           DELETE
         </button>

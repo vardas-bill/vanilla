@@ -63,7 +63,7 @@ export class ContactPage {
       this.secretClickCount = 0;
       let prompt = this.alertCtrl.create({
         title: 'Password',
-        message: "Enter password to access additional features",
+        message: "Enter password to access additional features. Leave password field empty if you want to stop seeing additional features.",
         inputs: [
           {
             name: 'password',
@@ -80,7 +80,7 @@ export class ContactPage {
           {
             text: 'Save Password',
             handler: data => {
-              alert('Password = ' + data.password);
+              //alert('Password = ' + data.password);
               this.nativeStorage.setItem('adminPassword', data.password)
                 .then(
                   () => {},

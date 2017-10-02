@@ -8,6 +8,8 @@ import { ItemEditPage } from '../item-edit/item-edit';
 import { DataProvider } from '../../providers/providers';
 import { CommonFunctionsProvider } from '../../providers/common-functions';
 
+import { VanillaApp } from '../../app/app.component';
+
 import { APP_NAME } from '../../app/app.settings';
 
 import * as moment from 'moment';
@@ -39,7 +41,7 @@ export class ProductsPage {
   name: string;
   pageTitle: string;
 
-  userIsAdmin: boolean = true;
+  isAdminUser: boolean = true;
 
 
   constructor(public navCtrl: NavController,
@@ -52,6 +54,8 @@ export class ProductsPage {
     this.keyword = this.navParams.get('keyword');
     this.name = this.navParams.get('name');
     this.pageTitle = this.navParams.get('pageTitle');
+
+    this.isAdminUser = this.commonFunctionsProvider.isAdminUser;
 
     this.displayDataItems();
 

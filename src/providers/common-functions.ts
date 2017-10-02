@@ -13,6 +13,8 @@ import moment from 'moment';
 @Injectable()
 export class CommonFunctionsProvider {
 
+  isAdminUser: boolean = false;
+
   constructor(public alertCtrl: AlertController,
               public platform: Platform) {
 
