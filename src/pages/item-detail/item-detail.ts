@@ -4,7 +4,9 @@ import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { CommentCreatePage } from '../comment-create/comment-create';
 
 //import { Items } from '../../providers/providers';
-import { DataProvider } from '../../providers/providers';
+import { DataProvider } from '../../providers/data';
+import { LocalStorageProvider } from '../../providers/local-storage';
+
 
 @Component({
   selector: 'page-item-detail',
@@ -14,6 +16,7 @@ export class ItemDetailPage {
 
   item:             any;
   itemImage:        any;
+  pinned: boolean = false;
   commentCount:     number = 0;
   comments:         any;
   displayComments:  boolean = false;
@@ -21,11 +24,14 @@ export class ItemDetailPage {
   constructor(public navCtrl: NavController,
               public modalCtrl: ModalController,
               public dataProvider: DataProvider,
+              public localStorageProvider: LocalStorageProvider,
               navParams: NavParams) {
 
     this.item = navParams.get('item');
     console.log('ItemDetailPage: Constructor: item param is = ' + JSON.stringify(this.item));
     this.itemImage = navParams.get('itemImage');
+
+    this.pinned = this.localStorageProvider.isPinned(this.item._id);
 
     this.getComments();
   }
@@ -86,4 +92,12 @@ export class ItemDetailPage {
   }
 
 
+
+  togglePin()
+  // Toggles whether or not this item is pinned
+  {
+    if (this.pinned) this.localStorageProvider.addPin(this.item._id);
+    else this.localStorageProvider.removePin(this.item._id);
+    this.pinned = !this.pinned;
+  }
 }

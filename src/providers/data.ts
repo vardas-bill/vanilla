@@ -371,7 +371,6 @@ export class DataProvider {
       startkey: 'ITEM:',
       endkey: 'ITEM:\uffff',
       attachments: true})
-
       .then((doc)=> {
         let k;
         let items = [];
@@ -380,6 +379,8 @@ export class DataProvider {
 
         for (k in row) {
           let item = row[k].doc;
+
+          //alert('DATA: ' + JSON.stringify(item));
 
           item = this.decryptData(item);
 

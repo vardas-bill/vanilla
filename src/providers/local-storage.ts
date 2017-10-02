@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import { SecureStorage } from 'ionic-native';
+import { NativeStorage } from '@ionic-native/native-storage';
 import { APP_NAME, SKIP_SECURESTORAGE, ENCRYPT_DATA } from '../app/app.settings';
 
 
@@ -11,103 +11,127 @@ import { APP_NAME, SKIP_SECURESTORAGE, ENCRYPT_DATA } from '../app/app.settings'
 @Injectable()
 export class LocalStorageProvider {
 
-  secureStorage: SecureStorage = new SecureStorage();
+  pins: any = [];
 
-  constructor()
+  constructor(public nativeStorage: NativeStorage)
   {
-    console.log('Hello Secure Storage Provider');
+    console.log('Hello LocalStorageProvider');
 
-    this.secureStorage.create(APP_NAME)
-      .then(
-        () => console.log('Secure storage is ready!'),
-        error => console.log(error)
-      );
-  }
-
-
-
-  settingsExist()
-  // Returns true if there are settings stored in local storage
-  {
-    return this.secureStorage.get('settings')
+    // Get the user's current list of pins (the IDs of the pinned items) and put in pins variable
+    this.nativeStorage.getItem('pins')
       .then(
         data => {
-          console.log('LocalStorage: settingsExist(): get settings returned: ' + data);
-          return true;
+          console.log('LocalStorageProvider: Constructor: getItem("pins"): get from local storage = ' + data);
+          this.pins = data;
         },
         error => {
-          console.log(error);
-          return false;
+          // This will happen if no pins have been stored yet
+          console.log('LocalStorageProvider: Constructor: getItem("pins"): get from local storage ERROR = ' + error)
+          this.pins = [];
         }
       );
   }
 
 
+  // ========
+  // PINS
+  //
 
-  getSettings()
-  // Gets the user's settings from local storage
+  addPin(itemID)
+  // Adds a new item to the user's list of pinned items
   {
-    return this.secureStorage.get('settings')
+    // Get the user's current list of pins (the IDs of the pinned items)
+    return this.nativeStorage.getItem('pins')
       .then(
         data => {
-          console.log('LocalStorage: getSettings(): get settings returned: ' + data);
-          return JSON.stringify(data);
-        },
-        error => {
-          console.log('ERROR: LocalStorage: getSettings(): get settings returned: ' +error);
-          return false;
-        }
-      );
-  }
+          console.log('LocalStorageProvider: addPin(): getItem("pins"): get from local storage = ' + data);
 
+          // Go through the list and check the itemID is not already pinned
+          data.forEach(function(id){
+            if (id == itemID) return;
+          });
 
+          data.append(itemID);
 
-  setSetting(name, value)
-  // Sets the given setting to the given value
-  {
-    // Get the settings, modify the given setting, and then put the settings back
-    return this.secureStorage.get('settings')
-      .then(
-        data => {
-          console.log('LocalStorage: setSettings(): get settings returned: ' + data);
+          this.pins = data;
 
-          let newData = JSON.parse(data);
-          newData[name] = value;
-
-          this.secureStorage.set('settings', newData)
+          this.nativeStorage.setItem('pins', data)
             .then(
-              data => {
-                console.log('LocalStorage: setSettings(): set settings returned: ' + data);
-                return data;
-              },
-              error => {
-                console.log(error);
-                return false;
-              }
+              () => {},
+              error => {}
             );
+
+          return;
         },
         error => {
-          console.log(error);
-          return false;
+          // This will happen if no pins have been stored yet
+          console.log('LocalStorageProvider: addPin(): getItem("pins"): get from local storage ERROR = ' + error);
+          let data:any = [itemID];
+
+          this.pins = data;
+
+          this.nativeStorage.setItem('pins', data)
+            .then(
+              () => {},
+              error => {}
+            );
+
+          return;
         }
       );
+
   }
 
 
-
-  removeSettings()
-  // Removes the user's settings from secure storage
+  removePin(itemID)
+  // Removes a pinned item from the user's list of pinned items
   {
-    return this.secureStorage.remove('settings')
+    // Get the user's current list of pins (the IDs of the pinned items)
+    return this.nativeStorage.getItem('pins')
       .then(
         data => {
-          console.log('LocalStorage: removeSettings(): remove settings returned: ' + data);
-          return true;
+          console.log('LocalStorageProvider: removePin(): getItem("pins"): get from local storage = ' + data);
+
+          // Go through the list and check the itemID is not already pinned
+          for (var i = 0; i < data.length; i++) {
+            if (data[i] == itemID) {
+              // Remove this pin
+              data.splice(i, 1);
+            }
+          }
+
+          this.pins = data;
+
+          this.nativeStorage.setItem('pins', data)
+            .then(
+              () => {},
+              error => {}
+            );
+
+          return;
         },
         error => {
-          console.log(error);
-          return false;
+          // This will happen if no pins have been stored yet so ignore request to remove pin
+          console.log('LocalStorageProvider: removePin(): getItem("pins"): get from local storage ERROR = ' + error)
+
+          return;
         }
       );
   }
+
+
+
+  isPinned(itemID)
+  // Returns true if itemID has been pinned
+  {
+    // Go through the list and check the itemID is not already pinned
+    for (var i = 0; i < this.pins.length; i++) {
+      if (this.pins[i] == itemID) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
 }

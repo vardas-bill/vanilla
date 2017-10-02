@@ -9,7 +9,9 @@
     <ion-title>{{ item.title }}</ion-title>
 
     <ion-buttons end>
-
+      <button ion-button (click)="togglePin()">
+        <ion-icon name="pin" [style.color]="pinned ? 'orange' : 'white'"></ion-icon>
+      </button>
     </ion-buttons>
 
   </ion-navbar>
@@ -21,7 +23,7 @@
   <img class="item-photo" [src]="itemImage.media">
 
   <div class="item-detail" padding>
-    <h2>{{item.title}}</h2>
+    <div class="title">{{item.title}}</div>
     <p>{{item.description}}</p>
     <div *ngIf="item.size" class="size-section">{{item.size}}</div>
     <div *ngIf="item.price" class="price-section">£{{item.price}}</div>

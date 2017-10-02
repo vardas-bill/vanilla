@@ -14,6 +14,7 @@ import { VanillaApp } from './app.component';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { HomePage } from '../pages/home/home';
+import { PinsPage } from '../pages/pins/pins';
 import { ProductsPage } from '../pages/products/products';
 import { ContactPage } from '../pages/contact/contact';
 import { LoginPage } from '../pages/login/login';
@@ -53,6 +54,7 @@ let pages = [
   TabsPage,
   VanillaApp,
   ProductsPage,
+  PinsPage,
   ContactPage,
   LoginPage,
   SignupPage,
