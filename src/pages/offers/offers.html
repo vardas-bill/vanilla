@@ -52,6 +52,7 @@
   </ion-row>
 
 
+
   <!-- CARDS VIEW -->
   <div *ngIf="showProducts && showCards">
     <ion-card *ngFor="let item of dataItems; let i = index">
@@ -70,6 +71,7 @@
 
         <ion-card-content>
           <p>{{item.description}}</p>
+          <p>...</p>
         </ion-card-content>
       </div>
       <!--

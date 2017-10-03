@@ -59,11 +59,11 @@ export const PRODUCT_CATEGORY5_SUBCATEGORIES = [];
 export const PRODUCT_CATEGORY6_SUBCATEGORIES = [];
 
 export const MAJOR_CATEGORY_BUTTON = [
-  {'name':'Craft Beer', 'keyword':'beer', 'pageTitle':'Craft Beers', 'backgroundColor': '#90D5D2', 'textColor': 'black', 'image': ''},
-  {'name':'Craft Lager', 'keyword':'lager', 'pageTitle':'Craft Lager', 'backgroundColor': '#89B3B2', 'textColor': 'black', 'image': ''},
-  {'name':'', 'keyword':'ALL', 'pageTitle':'Our Craft Products', 'backgroundColor': '#343440', 'textColor': 'black', 'image': 'assets/img/square_logo.png'},
-  {'name':'Craft Water', 'keyword':'water', 'pageTitle':'Craft Water', 'backgroundColor': '#BED3B2', 'textColor': 'black', 'image': ''},
-  {'name':'Craft Whisky', 'keyword':'whisky', 'pageTitle':'Craft Whisky', 'backgroundColor': '#F79087', 'textColor': 'black', 'image': ''}
+  {'show':true, 'name':'Furniture', 'keyword':'furniture', 'pageTitle':'Craft Beers', 'backgroundColor': '#9BA0B2', 'textColor': 'white', 'image': ''},
+  {'show':true, 'name':'Bright Lights', 'keyword':'lights', 'pageTitle':'Craft Lager', 'backgroundColor': '#89B3B2', 'textColor': 'white', 'image': ''},
+  {'show':true, 'name':'', 'keyword':'ALL', 'pageTitle':'Stuff', 'backgroundColor': '#434343', 'textColor': 'black', 'image': 'assets/img/square_logo.png'},
+  {'show':true, 'name':'Printed', 'keyword':'printed', 'pageTitle':'Craft Water', 'backgroundColor': '#BED3B2', 'textColor': 'white', 'image': ''},
+  {'show':true, 'name':'Misfits', 'keyword':'misfits', 'pageTitle':'Craft Whisky', 'backgroundColor': '#BDA6A3', 'textColor': 'white', 'image': ''}
 ]
 
 

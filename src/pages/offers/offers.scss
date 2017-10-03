@@ -1,6 +1,6 @@
 .ios, .md {
 
-  page-pins {
+  page-offers {
 
     .product-navbar {
       //border-top: 5px solid white;
@@ -9,7 +9,7 @@
 
     .background {
       //background-image: url($company-home-page-background-image);
-      background-color: $company-pins-page-background-color;//#3F434C;
+      background-color: $company-offers-page-background-color;//#3F434C;
       background-size: cover;
       height: 105%;
       margin-top: -20px;
@@ -23,8 +23,8 @@
     .layout-style-button {
       background-color: transparent;
       width: 100%;
-      color: $company-pins-page-button-color;
-      border: 1px solid $company-pins-page-button-color;
+      color: $company-offers-page-button-color;
+      border: 1px solid $company-offers-page-button-color;
     }
     .menu-icon {
       color: white;
@@ -36,8 +36,8 @@
 
     // LISTS
     .item {
-      color: $company-pins-page-list-font-color;
-      background-color: $company-pins-page-list-background-color;
+      color: $company-offers-page-list-font-color;
+      background-color: $company-offers-page-list-background-color;
     }
     .list-items {
       margin-top: 10px;

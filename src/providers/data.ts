@@ -364,7 +364,7 @@ export class DataProvider {
 
 
   getItems()
-  // Get all of a user's items
+  // Get all of items (products)
   {
     return this._productDB.allDocs({
       include_docs: true,

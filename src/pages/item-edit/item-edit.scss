@@ -1,63 +1,66 @@
-page-item-edit {
+.ios, .md {
 
-  .item-image-wrapper {
-    text-align: center;
-    margin: 20px 0;
+  page-item-edit {
 
-    .item-image {
-      width: 120px;
-      height: 120px;
-      //border-radius: 50%;
+    .item-image-wrapper {
+      text-align: center;
+      margin: 20px 0;
 
-      display: inline-block;
+      .item-image {
+        width: 120px;
+        height: 120px;
+        //border-radius: 50%;
 
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
-    }
+        display: inline-block;
 
-    .item-image-placeholder {
-      display: inline-block;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+      }
 
-      background-color: #eee;
-      width: 96px;
-      height: 96px;
-      //border-radius: 50%;
+      .item-image-placeholder {
+        display: inline-block;
 
-      font-size: 12px;
+        background-color: #eee;
+        width: 96px;
+        height: 96px;
+        //border-radius: 50%;
 
-      ion-icon {
-        font-size: 44px;
-        margin-bottom: -10px;
-        margin-top: 10px;
+        font-size: 12px;
+
+        ion-icon {
+          font-size: 44px;
+          margin-bottom: -10px;
+          margin-top: 10px;
+        }
       }
     }
-  }
 
-  .item-label {
-    padding-bottom: 4px;
-    color: black !important;
-  }
+    .item-label {
+      padding-bottom: 4px;
+      color: black !important;
+    }
 
-  ion-label {
-    color: black;
-    font-weight: 400;
-    font-size: 12px !important;
-  }
+    ion-label {
+      color: black;
+      font-weight: 400;
+      font-size: 12px !important;
+    }
 
-  ion-input, ion-textarea {
-    border-style: solid;
-    border-width: 0.5px;
-    border-color: black;
-    padding-left: 10px;
-    font-size: 12px;
-  }
+    ion-input, ion-textarea {
+      border-style: solid;
+      border-width: 0.5px;
+      border-color: black;
+      padding-left: 10px;
+      font-size: 12px;
+    }
 
-  textarea {
-    height: 10vh;
-  }
+    textarea {
+      height: 10vh;
+    }
 
-  .delete-button {
-    color: red;
+    .delete-button {
+      color: red;
+    }
   }
 }

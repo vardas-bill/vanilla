@@ -13,8 +13,10 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { VanillaApp } from './app.component';
 
 import { TabsPage } from '../pages/tabs/tabs';
+import { AboutPage } from '../pages/about/about';
 import { HomePage } from '../pages/home/home';
 import { PinsPage } from '../pages/pins/pins';
+import { OffersPage } from '../pages/offers/offers';
 import { ProductsPage } from '../pages/products/products';
 import { ContactPage } from '../pages/contact/contact';
 import { LoginPage } from '../pages/login/login';
@@ -38,6 +40,7 @@ import { OneSignal } from '@ionic-native/onesignal';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
 
 
+
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
 export function createTranslateLoader(http: Http) {
@@ -53,8 +56,10 @@ export function createTranslateLoader(http: Http) {
 let pages = [
   TabsPage,
   VanillaApp,
+  AboutPage,
   ProductsPage,
   PinsPage,
+  OffersPage,
   ContactPage,
   LoginPage,
   SignupPage,

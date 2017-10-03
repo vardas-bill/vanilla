@@ -34,6 +34,7 @@
     }
 
     .top-category, .bottom-category {
+      //border-radius: 50%;
       margin-left: auto;
       margin-right: auto;
       padding: 10px;
@@ -53,6 +54,7 @@
     }
 
     .left-category, .right-category, .middle-category {
+      //border-radius: 50%;
       float: left;
       padding: 10px;
       width: 33vw;
@@ -71,6 +73,7 @@
     }
 
     .middle-category {
+      //border-radius: 10%;
       width: 34vw;
       //background-color: white;
       //color: black;

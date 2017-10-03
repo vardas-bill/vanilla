@@ -42,18 +42,38 @@ $colors: (
 // COMPANY COLORS
 // ==============
 
+.toolbar-logo {
+  max-height: 30px;
+}
 // GREY SCHEME
 
 $company-highlight-color: #FF696B;
-$company-tabs-color: #A49A99;//#009999;
+$company-tabs-color: #434343;//#A49A99;//#009999;
 $company-toolbar-color: #343440;//#006666;//#009999;
-$company-home-page-background-image: '../assets/img/welcome_background.jpg';
+$company-home-page-background-image: '../assets/img/home_background.jpg';
+
 $company-product-page-background-image: '../assets/img/welcome_background.jpg';
 $company-product-page-background-color: #E8DDD9;//#004d4d;//#006666;
 $company-product-page-button-color:$company-toolbar-color;
 $company-product-page-list-background-color: $company-tabs-color;//#E8DDD9;//#004d4d;//#006666;
 $company-product-page-list-font-color: white;
+
+$company-offers-page-background-image: '../assets/img/welcome_background.jpg';
+$company-offers-page-background-color: #E8DDD9;//#004d4d;//#006666;
+$company-offers-page-button-color:$company-toolbar-color;
+$company-offers-page-list-background-color: $company-tabs-color;//#E8DDD9;//#004d4d;//#006666;
+$company-offers-page-list-font-color: white;
+
+$company-pins-page-background-image: '../assets/img/welcome_background.jpg';
+$company-pins-page-background-color: #E8DDD9;//#004d4d;//#006666;
+$company-pins-page-button-color:$company-toolbar-color;
+$company-pins-page-list-background-color: $company-tabs-color;//#E8DDD9;//#004d4d;//#006666;
+$company-pins-page-list-font-color: white;
+
 $company-contact-page-background-color: #E8DDD9;//#004d4d;//#006666;
+
+$company-about-page-background-color: #E8DDD9;
+
 $company-modal-background-color: $company-product-page-background-color;
 $special-offer-heading-color: $company-highlight-color;
 /*
@@ -97,10 +117,12 @@ $toolbar-md-title-font-weight: 100;
 
 
 // TABS
+
+
 $tabs-ios-border: solid 1px $company-toolbar-color;
-$tabs-ios-tab-icon-color-active: $company-toolbar-color;//black;//$company-blue;
+$tabs-ios-tab-icon-color-active: #E8AAA9;//$company-toolbar-color;//black;//$company-blue;
 $tabs-ios-tab-icon-color: white;
-$tabs-md-tab-icon-color-active: $company-toolbar-color;//black;//$company-blue;
+$tabs-md-tab-icon-color-active: #E8AAA9;//$company-toolbar-color;//black;//$company-blue;
 $tabs-md-tab-icon-color: white;
 $tabs-ios-tab-text-color-active: red;
 $tabs-md-tab-text-color-active: red;

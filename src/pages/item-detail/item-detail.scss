@@ -1,71 +1,74 @@
-page-item-detail {
-  .item-photo {
-    //height: 100%;
-    //background-position: center center;
-    //background-size: cover;
-    //height: 250px;
-    width: 100%;
-  }
+.ios, .md {
 
-  .title {
-    font-size: 18px;
-    font-weight: 600;
-  }
-  .item-detail {
-    width: 100%;
-    background: white;
-    position: absolute;
-  }
+  page-item-detail {
+    .item-photo {
+      //height: 100%;
+      //background-position: center center;
+      //background-size: cover;
+      //height: 250px;
+      width: 100%;
+    }
 
-  .price-section {
-    margin-top: 4px;
-  }
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .item-detail {
+      width: 100%;
+      background: white;
+      position: absolute;
+    }
 
-  .special-offer-heading {
-    margin-top: 16px;
-    color: $special-offer-heading-color;
-    font-size: 16px;
-    font-weight: 600;
-    //float: left;
-  }
-  .special-offer-description {
-    //float: left;
-    margin-top: 4px;
-  }
+    .price-section {
+      margin-top: 4px;
+    }
 
-  .comments-container {
-    border-top-style: solid;
-    border-top-width: 2px;
-    border-top-color: black;
-    margin-top:20px;
-    font-size: 12px;
-  }
-  .comment-count {
-    float: left;
-    color: blue;
-    margin-top: 20px;
-  }
-  .add-comment {
-    float: right;
-    margin-top: 16px;
-    border-style: solid;
-    border-width: 0.5px;
-    border-color: black;
-    padding: 4px;
-    font-weight: 100;
-  }
-  .comment-author {
-    font-weight: 600;
-  }
-  .comment {
-    clear: both;
-    color: grey;
-    width: 100%;
-    border-bottom-style: solid;
-    border-bottom-width: 0.5px;
-    border-bottom-color: black;
-    padding-top: 20px;
-    padding-bottom: 10px;
-    margin-top: 0px;
+    .special-offer-heading {
+      margin-top: 16px;
+      color: $special-offer-heading-color;
+      font-size: 16px;
+      font-weight: 600;
+      //float: left;
+    }
+    .special-offer-description {
+      //float: left;
+      margin-top: 4px;
+    }
+
+    .comments-container {
+      border-top-style: solid;
+      border-top-width: 2px;
+      border-top-color: black;
+      margin-top: 20px;
+      font-size: 12px;
+    }
+    .comment-count {
+      float: left;
+      color: blue;
+      margin-top: 20px;
+    }
+    .add-comment {
+      float: right;
+      margin-top: 16px;
+      border-style: solid;
+      border-width: 0.5px;
+      border-color: black;
+      padding: 4px;
+      font-weight: 100;
+    }
+    .comment-author {
+      font-weight: 600;
+    }
+    .comment {
+      clear: both;
+      color: grey;
+      width: 100%;
+      border-bottom-style: solid;
+      border-bottom-width: 0.5px;
+      border-bottom-color: black;
+      padding-top: 20px;
+      padding-bottom: 10px;
+      margin-top: 0px;
+    }
   }
 }

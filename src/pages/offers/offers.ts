@@ -17,10 +17,10 @@ import * as moment from 'moment';
 
 
 @Component({
-  selector: 'page-pins',
-  templateUrl: 'pins.html'
+  selector: 'page-offers',
+  templateUrl: 'offers.html'
 })
-export class PinsPage {
+export class OffersPage {
 
   showProducts: boolean = false;
   showLoadingSpinner: boolean = true;
@@ -51,7 +51,7 @@ export class PinsPage {
 
     //this.keyword = this.navParams.get('keyword');
     //this.name = this.navParams.get('name');
-    this.pageTitle = "Your Pins";
+    this.pageTitle = "Special Offers";
 
     this.isAdminUser = this.commonFunctionsProvider.isAdminUser;
 
@@ -70,7 +70,7 @@ export class PinsPage {
 
 
   displayDataItems()
-  // Shows all of the items that have been pinned
+  // Shows all of the items that have special offers
   {
     this.dataProvider.getItems().then((data) => {
       console.log('PinsPage: displayDataItems: dataService.getItems() returned: ' + JSON.stringify(data));
@@ -86,8 +86,8 @@ export class PinsPage {
         // Go through changing the edit date of each Plan from iso format to the format we want and add associated images to array.
         for (let i = 0; i < numItems; i++) {
 
-          // Don't include this item if it isn't pinned
-          if (this.localStorageProvider.pins.indexOf(this.dataItems[i]._id) == -1) {
+          // Don't include this item if it doesn't have a special offer
+          if (!this.dataItems[i].specialOffer) {
             this.dataItems.splice(i,1);
             i = i - 1;
             numItems = numItems - 1;
@@ -107,7 +107,7 @@ export class PinsPage {
 
         if (this.dataItems.length < 1) {
           let toast = this.toastCtrl.create({
-            message: "You don't have anything pinned yet. You can pin a product using the pin at the top of a product's details page.",
+            message: "Sorry! There aren't any special offers right now.",
             duration: 5000,
             position: 'top'
           });

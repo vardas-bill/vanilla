@@ -57,8 +57,16 @@ export class ProductsPage {
 
     this.isAdminUser = this.commonFunctionsProvider.isAdminUser;
 
-    this.displayDataItems();
+    //this.displayDataItems();
 
+  }
+
+
+
+  ionViewDidEnter()
+  // Refresh the data every time we enter
+  {
+    this.displayDataItems();
   }
 
 
@@ -79,6 +87,7 @@ export class ProductsPage {
 
         // Go through changing the edit date of each Plan from iso format to the format we want and add associated immages to array.
         for (let i = 0; i < numItems; i++) {
+
           // Don't include this entry if it doesn't match the keyword
           console.log('+++++ this.dataItems[i].itemType = ' + this.dataItems[i].itemType + ', this.keyword = ' + this.keyword
             + ', this.dataItems[i].itemType.indexOf(this.keyword) = ' + this.dataItems[i].itemType.indexOf(this.keyword));
@@ -93,11 +102,13 @@ export class ProductsPage {
 
           // Initialise itemImage array entry in preparation for being filled by displayMedia
           this.itemImage.push({'type':'', 'media':''});
+          // Put media items in the itemImage array
           this.displayMedia(i, this.dataItems[i].media[0]);
-
+/*
           // Initialise itemComments array entry in preparation for being filled by displayMedia
           this.itemComments.push({'type':'', 'media':''});
           this.displayComments(i, this.dataItems[i]._id);
+*/
         }
         //this.showProducts = true;
         setTimeout(()=>{
@@ -247,9 +258,7 @@ export class ProductsPage {
 
 
   openItem(item, itemImage)
-  /**
-   * Navigate to the detail page for this item.
-   */
+  // Show the ItemDetailPage for the given item
   {
     console.log('ProductsPage: openItem()');
     this.navCtrl.push(ItemDetailPage, {
