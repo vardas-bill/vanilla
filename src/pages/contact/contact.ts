@@ -5,7 +5,7 @@ import { CallNumber } from '@ionic-native/call-number';
 import { AppVersion } from '@ionic-native/app-version';
 import { NativeStorage } from '@ionic-native/native-storage';
 
-import { CommonFunctionsProvider } from '../../providers/common-functions'
+import { CommonFunctionsProvider } from '../../providers/common-functions';
 
 
 @Component({
@@ -104,5 +104,12 @@ export class ContactPage {
   companyTwitter()
   {
     this.commonFunctionsProvider.gotoTwitter();
+  }
+
+
+
+  companyInstagram()
+  {
+    this.commonFunctionsProvider.gotoInstagram();
   }
 }

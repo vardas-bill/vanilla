@@ -279,4 +279,11 @@ export class ProductsPage {
   {
     this.commonFunctionsProvider.gotoTwitter();
   }
+
+
+
+  companyInstagram()
+  {
+    this.commonFunctionsProvider.gotoInstagram();
+  }
 }

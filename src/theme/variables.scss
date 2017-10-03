@@ -39,17 +39,15 @@ $colors: (
   company-red: #D51957
 );
 
+
 // COMPANY COLORS
 // ==============
 
-.toolbar-logo {
-  max-height: 30px;
-}
 // GREY SCHEME
 
 $company-highlight-color: #FF696B;
 $company-tabs-color: #434343;//#A49A99;//#009999;
-$company-toolbar-color: #343440;//#006666;//#009999;
+$company-toolbar-color: #434343;//#006666;//#009999;
 $company-home-page-background-image: '../assets/img/home_background.jpg';
 
 $company-product-page-background-image: '../assets/img/welcome_background.jpg';
@@ -89,6 +87,9 @@ $company-contact-page-background-color: #DDF2F3;//#004d4d;//#006666;
 $company-modal-background-color: $company-product-page-background-color;
 */
 // NAV BAR / TOOL BAR
+.toolbar-logo {
+  max-height: 34px;
+}
 .back-button-ios {
   font-size: 1.6rem !important;
   font-weight: 100;
@@ -97,10 +98,9 @@ ion-header ion-icon.back-button-icon.icon{
   font-size: 1.6rem;
   margin-top: 0.1rem;
 }
-
 .navbar-fb-icon {
   height: 1.6rem;//25px;
-  margin-left: 2px;
+  //margin-left: 0px;
   margin-right: 10px;
 }
 $toolbar-background: $company-toolbar-color;//$company-toolbar-gray;

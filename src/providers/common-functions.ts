@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AlertController} from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 
-import { FB_LINK, TW_LINK } from '../app/app.settings';
+import { FB_LINK, TW_LINK, INSTAGRAM_LINK } from '../app/app.settings';
 
 import moment from 'moment';
 
@@ -62,6 +62,12 @@ export class CommonFunctionsProvider {
   gotoTwitter()
   {
     window.open(TW_LINK, '_system', 'location=no');
+  }
+
+
+  gotoInstagram()
+  {
+    window.open(INSTAGRAM_LINK, '_system', 'location=no');
   }
 }
 

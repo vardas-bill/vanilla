@@ -7,6 +7,8 @@ import { CommentCreatePage } from '../comment-create/comment-create';
 import { DataProvider } from '../../providers/data';
 import { LocalStorageProvider } from '../../providers/local-storage';
 
+import { CommonFunctionsProvider } from '../../providers/common-functions';
+
 
 @Component({
   selector: 'page-item-detail',
@@ -25,6 +27,7 @@ export class ItemDetailPage {
               public modalCtrl: ModalController,
               public dataProvider: DataProvider,
               public localStorageProvider: LocalStorageProvider,
+              public commonFunctionsProvider: CommonFunctionsProvider,
               navParams: NavParams) {
 
     this.item = navParams.get('item');
@@ -99,5 +102,26 @@ export class ItemDetailPage {
     if (this.pinned) this.localStorageProvider.addPin(this.item._id);
     else this.localStorageProvider.removePin(this.item._id);
     this.pinned = !this.pinned;
+  }
+
+
+
+  companyFacebook()
+  {
+    this.commonFunctionsProvider.gotoFacebook();
+  }
+
+
+
+  companyTwitter()
+  {
+    this.commonFunctionsProvider.gotoTwitter();
+  }
+
+
+
+  companyInstagram()
+  {
+    this.commonFunctionsProvider.gotoInstagram();
   }
 }

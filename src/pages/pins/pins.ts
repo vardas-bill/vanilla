@@ -282,4 +282,11 @@ export class PinsPage {
   {
     this.commonFunctionsProvider.gotoTwitter();
   }
+
+
+
+  companyInstagram()
+  {
+    this.commonFunctionsProvider.gotoInstagram();
+  }
 }

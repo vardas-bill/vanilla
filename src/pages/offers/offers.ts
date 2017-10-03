@@ -282,4 +282,10 @@ export class OffersPage {
   {
     this.commonFunctionsProvider.gotoTwitter();
   }
+
+
+  companyInstagram()
+  {
+    this.commonFunctionsProvider.gotoInstagram();
+  }
 }

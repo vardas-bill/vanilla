@@ -48,8 +48,9 @@ export const ENCRYPT_DATA = false; // Says whether or not PouchDB/CouchDB data g
 export const APP_NAME = 'VanillaApp';
 export const PRODUCT_DB_NAME = 'product';
 export const DO_LOGIN = false;
-export const FB_LINK = 'fb://profile/430788326941674';
-export const TW_LINK = 'https://twitter.com/Edgbaston_High';
+export const FB_LINK = 'fb://profile/143148719116222';
+export const TW_LINK = 'https://twitter.com/DigHaushizzle';
+export const INSTAGRAM_LINK = 'https://www.instagram.com/dig_haushizzle/';
 
 export const PRODUCT_CATEGORY1_SUBCATEGORIES = [];
 export const PRODUCT_CATEGORY2_SUBCATEGORIES = [];
