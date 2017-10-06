@@ -24,11 +24,18 @@
 
   <div class="item-detail" padding>
     <div class="title">{{item.title}}</div>
+    <div class="date">Added: {{item.updated}}</div>
     <p>{{item.description}}</p>
     <div *ngIf="item.size" class="size-section">{{item.size}}</div>
     <div *ngIf="item.price" class="price-section">£{{item.price}}</div>
     <div *ngIf="item.specialOffer" class="special-offer-heading">Special Offer:</div>
     <div *ngIf="item.specialOffer" class="special-offer-description">{{item.offerDescription}}</div>
+
+    <div class="shop-link">
+      <a href="http://shop.dig-haushizzle.co.uk/">DIG Haushizzle Shop</a>
+    </div>
+
+    <br /><br /><br />
 
     <!--
     <div class="comments-container">

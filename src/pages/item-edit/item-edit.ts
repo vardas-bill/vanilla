@@ -41,12 +41,16 @@ export class ItemEditPage {
       price: [''],
       currency: [''],
       size: [''],
+      webLink: [''],
       promote: [false],
       specialOffer: [false],
       offerDescription: ['']
     });
 
     this.itemID = this.navParams.get('itemID');
+
+    console.log('ItemEditPage: Constructor(): this.itemID = ' + this.itemID);
+
     this.dataProvider.getItem(this.itemID).then((result)=>{
       if (result) {
         console.log('ItemEditPage: Constructor: getItem returned result = ' + JSON.stringify(result));
@@ -72,6 +76,7 @@ export class ItemEditPage {
               price: [result.price],
               currency: [result.currency],
               size: [result.size],
+              webLink: [result.webLink],
               promote: [result.flagged],
               specialOffer: [result.specialOffer],
               offerDescription: [result.offerDescription]
@@ -215,6 +220,7 @@ export class ItemEditPage {
     this.item.productID = this.form.value.productID;
     this.item.description = this.form.value.description;
     this.item.size = this.form.value.size;
+    this.item.webLink = this.form.value.webLink;
     this.item.price = this.form.value.price;
     this.item.currency = this.form.value.currency;
     this.item.flagged = this.form.value.promote;

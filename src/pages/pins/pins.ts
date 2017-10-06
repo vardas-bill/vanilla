@@ -107,7 +107,7 @@ export class PinsPage {
 
         if (this.dataItems.length < 1) {
           let toast = this.toastCtrl.create({
-            message: "You don't have anything pinned yet. You can pin a product using the pin at the top of a product's details page.",
+            message: "You don't have anything pinned yet. You can pin and unpin products using the pin at the top of the product's details page.",
             duration: 5000,
             position: 'top'
           });
@@ -214,11 +214,11 @@ export class PinsPage {
 
 
 
-  editItem(itemID)
+  editItem(item)
   // Shows the ItemEditPage to let user edit an item
   {
-    console.log('PinsPage: editItem(): itemID = ' + itemID);
-    let addModal = this.modalCtrl.create(ItemEditPage, {'itemID':itemID});
+    console.log('PinsPage: editItem(): item = ' + item._id);
+    let addModal = this.modalCtrl.create(ItemEditPage, {'itemID':item._id});
     addModal.onDidDismiss(item => {
       // Refresh the display
       this.displayDataItems();
@@ -228,7 +228,7 @@ export class PinsPage {
 
 
 
-  deleteItem(itemID)
+  deleteItem(item)
   // Deletes an item
   {
     console.log('PinsPage: deleteItem()');
@@ -246,7 +246,7 @@ export class PinsPage {
         {
           text: 'Yes',
           handler: () => {
-            this.dataProvider.getItem(itemID).then((item)=>{
+            this.dataProvider.getItem(item._id).then((item)=>{
               if (item) this.dataProvider.removeItem(item._id,item._rev).then((result)=>{
                 this.displayDataItems();
               });

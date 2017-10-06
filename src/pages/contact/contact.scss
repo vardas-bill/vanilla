@@ -17,7 +17,7 @@
       padding: 10px 10px 0px 40px;
     }
     .text  {
-      padding: 0px 0px 0px 40px;
+      padding: 10px 0px 0px 14px;
     }
     .contacts-heading {
       font-size: 15px;
@@ -27,7 +27,7 @@
       padding-left: 14px;
     }
     .address-box {
-      padding: 0px 10px 0px 14px;
+      padding: 10px 10px 0px 14px;
       font-size: 14px;
     }
     .phonenumbers {
@@ -71,7 +71,16 @@
       //margin-bottom: -10px;
     }
     .mailto {
+      font-weight: 400;
+    }
+
+    .opening-hours-heading {
+      padding: 20px 10px 0px 14px;
       font-weight: 600;
+    }
+    .opening-hours {
+      margin-left: 14px;
+      margin-top: 10px;
     }
     .app-version {
       margin-top: 50px;

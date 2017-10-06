@@ -214,11 +214,11 @@ export class OffersPage {
 
 
 
-  editItem(itemID)
+  editItem(item)
   // Shows the ItemEditPage to let user edit an item
   {
-    console.log('PinsPage: editItem(): itemID = ' + itemID);
-    let addModal = this.modalCtrl.create(ItemEditPage, {'itemID':itemID});
+    console.log('PinsPage: editItem(): itemID = ' + item._id);
+    let addModal = this.modalCtrl.create(ItemEditPage, {'itemID':item._id});
     addModal.onDidDismiss(item => {
       // Refresh the display
       this.displayDataItems();
@@ -228,7 +228,7 @@ export class OffersPage {
 
 
 
-  deleteItem(itemID)
+  deleteItem(item)
   // Deletes an item
   {
     console.log('PinsPage: deleteItem()');
@@ -246,7 +246,7 @@ export class OffersPage {
         {
           text: 'Yes',
           handler: () => {
-            this.dataProvider.getItem(itemID).then((item)=>{
+            this.dataProvider.getItem(item._id).then((item)=>{
               if (item) this.dataProvider.removeItem(item._id,item._rev).then((result)=>{
                 this.displayDataItems();
               });

@@ -7,6 +7,7 @@
       //background-size: cover;
       //height: 250px;
       width: 100%;
+      margin-bottom: -3px;
     }
 
     .title {
@@ -15,14 +16,24 @@
     }
     .item-detail {
       width: 100%;
-      background: white;
+      background: $company-about-page-background-color;
       position: absolute;
     }
-
-    .price-section {
+    .date {
       margin-top: 4px;
+      font-size: 10px;
     }
-
+    .price-section {
+      //margin-top: 10px;
+      float: left;
+      padding-right: 20px;
+      padding-top: 14px;
+    }
+    .shop-link {
+      //float: left;
+      //padding-left: 20px;
+      padding-top: 14px;
+    }
     .special-offer-heading {
       margin-top: 16px;
       color: $special-offer-heading-color;

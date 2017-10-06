@@ -45,8 +45,8 @@ export var REMOTE_SERVER = true;
 export const SKIP_SECURESTORAGE = false;
 export const ENCRYPT_DATA = false; // Says whether or not PouchDB/CouchDB data gets encrypted
 
-export const APP_NAME = 'VanillaApp';
-export const PRODUCT_DB_NAME = 'product';
+export const APP_NAME = 'VanillaApp'; // :TO DO: Change to dighaushizzle
+export const PRODUCT_DB_NAME = 'dighaushizzle';
 export const DO_LOGIN = false;
 export const FB_LINK = 'fb://profile/143148719116222';
 export const TW_LINK = 'https://twitter.com/DigHaushizzle';
@@ -60,11 +60,11 @@ export const PRODUCT_CATEGORY5_SUBCATEGORIES = [];
 export const PRODUCT_CATEGORY6_SUBCATEGORIES = [];
 
 export const MAJOR_CATEGORY_BUTTON = [
-  {'show':true, 'name':'Furniture', 'keyword':'furniture', 'pageTitle':'Craft Beers', 'backgroundColor': '#9BA0B2', 'textColor': 'white', 'image': ''},
-  {'show':true, 'name':'Bright Lights', 'keyword':'lights', 'pageTitle':'Craft Lager', 'backgroundColor': '#89B3B2', 'textColor': 'white', 'image': ''},
+  {'show':true, 'name':'Furniture', 'keyword':'furniture', 'pageTitle':'Furniture', 'backgroundColor': '#9BA0B2', 'textColor': 'white', 'image': ''},
+  {'show':true, 'name':'Bright Lights', 'keyword':'lights', 'pageTitle':'Bright Lights', 'backgroundColor': '#89B3B2', 'textColor': 'white', 'image': ''},
   {'show':true, 'name':'', 'keyword':'ALL', 'pageTitle':'Stuff', 'backgroundColor': '#434343', 'textColor': 'black', 'image': 'assets/img/square_logo.png'},
-  {'show':true, 'name':'Printed', 'keyword':'printed', 'pageTitle':'Craft Water', 'backgroundColor': '#BED3B2', 'textColor': 'white', 'image': ''},
-  {'show':true, 'name':'Misfits', 'keyword':'misfits', 'pageTitle':'Craft Whisky', 'backgroundColor': '#BDA6A3', 'textColor': 'white', 'image': ''}
+  {'show':true, 'name':'Printed', 'keyword':'printed', 'pageTitle':'Printed', 'backgroundColor': '#BED3B2', 'textColor': 'white', 'image': ''},
+  {'show':true, 'name':'Misfits', 'keyword':'misfits', 'pageTitle':'Misfits', 'backgroundColor': '#BDA6A3', 'textColor': 'white', 'image': ''}
 ]
 
 

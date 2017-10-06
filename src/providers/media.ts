@@ -28,13 +28,13 @@ export class MediaProvider {
 
     const options: CameraOptions = {
       quality: 50,
-      allowEdit: true,
+      allowEdit: false,
       correctOrientation: true,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      //targetWidth: 480,
-      //targetHeight: 480
+      targetWidth: 480,
+      //targetHeight: 850
     }
 
     return new Promise(resolve =>
@@ -57,14 +57,14 @@ export class MediaProvider {
   {
     const options: CameraOptions = {
       quality: 50,
-      allowEdit: true,
+      allowEdit: false,//true,
       correctOrientation: true,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       targetWidth: 480,
-      targetHeight: 480
+      //targetHeight: 480
     }
 
     return new Promise(resolve =>

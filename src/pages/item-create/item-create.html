@@ -26,7 +26,7 @@
 <ion-content>
   <form *ngIf="form" [formGroup]="form" (ngSubmit)="createItem()">
     <input type="file" #fileInput style="visibility: hidden; height: 0px" name="files[]" (change)="processWebImage($event)"/>
-    <div class="item-image-wrapper" (click)="getPicture()">
+    <div class="item-image-wrapper" tappable (click)="getPicture()">
       <div class="item-image-placeholder" *ngIf="!this.form.controls.itemPic.value">
         <ion-icon name="add"></ion-icon>
         <div>
@@ -54,11 +54,15 @@
       </ion-item>
       <ion-item>
         <ion-label stacked class="item-label">Size (optional):</ion-label>
-        <ion-input type="text" placeholder="" formControlName="size"></ion-input>
+        <ion-textarea type="text" placeholder="" formControlName="size"></ion-textarea>
       </ion-item>
       <ion-item>
         <ion-label stacked class="item-label">Price £ (optional):</ion-label>
         <ion-input type="text" placeholder="" formControlName="price"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked class="item-label">Web link (optional):</ion-label>
+        <ion-input type="text" placeholder="" formControlName="webLink"></ion-input>
       </ion-item>
       <!--
       <ion-item>

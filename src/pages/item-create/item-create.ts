@@ -38,6 +38,7 @@ export class ItemCreatePage {
       price: [''],
       currency: [''],
       size: [''],
+      webLink: [''],
       promote: [false],
       specialOffer: [false],
       offerDescription: ['']
@@ -173,6 +174,7 @@ export class ItemCreatePage {
     data.productID = this.form.value.productID;
     data.description = this.form.value.description;
     data.size = this.form.value.size;
+    data.webLink = this.form.value.webLink;
     data.price = this.form.value.price;
     data.currency = this.form.value.currency;
     data.flagged = this.form.value.promote;

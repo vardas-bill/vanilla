@@ -157,8 +157,10 @@ export class VanillaApp {
               }
             );
         }
-        else {
+        else { // We are running via ionic serve
           this.dataProvider.init(null);
+          this.commonFunctionsProvider.isAdminUser = true;
+          //this.dataProvider.init('1234'); // :TO DO: :TEMP: Allows us to add products using ionic serve
         }
         //this.nav.setRoot(HomePage);
       }

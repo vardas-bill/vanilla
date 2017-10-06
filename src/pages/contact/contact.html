@@ -26,62 +26,48 @@
 
 
 <ion-content>
-
+<!--
   <div class="heading">
-    Edgbaston High School for Girls
+    CONTACT
   </div>
+-->
+  <div class="text">
+    If you have any questions about any of our products, would like to enquire about our sourcing service, or would like to sell items, please get in touch.
+  </div>
+
   <div class="address-box">
     <div class="address">
-      Westbourne Road <br />
-      Edgbaston <br />
-      Birmingham <br />
-      B15 3TS <br />
+      Dig Haüshizzle <br />
+      51 Colston Street <br />
+      Christmas Steps Arts Quarter <br />
+      Bristol <br />
+      BS1 5AX
     </div>
     <div class="phonenumbers">
-      <div (click)="dialNumber('0121 454 5831')"> Tel: 0121 454 5831 </div>
-      Fax: 0121 454 2363 <br />
-      Email: <a href="mailto:enquiries@edgbastonhigh.co.uk" class="mailto"> enquiries@edgbastonhigh.co.uk </a> <br />
-      (School Office)
+      <div (click)="dialNumber('07789145175')"> Tel: 077891 45175 </div>
+      <div (click)="dialNumber('07811545608')"> Tel: 078115 45608 </div>
+      <br />
+      Email: <a href="mailto:info@dig-haushizzle.co.uk" class="mailto">info@dig-haushizzle.co.uk </a> <br />
+      Web: <a href="http://dig-haushizzle.co.uk">http://dig-haushizzle.co.uk</a>
     </div>
   </div>
 
-  <div class="contacts-heading">
-    Useful contacts:
+  <div class="opening-hours-heading">
+    OPENING HOURS
   </div>
 
-  <div class="contacts-box">
-    <div class="contact-first-item">
-      <div class="sub-heading">
-        Headmistress:
-      </div>
-      <div class="text">
-        <a href="mailto:head@edgbastonhigh.co.uk" class="mailto"> head@edgbastonhigh.co.uk </a>
-      </div>
-    </div>
-
-    <div class="contact-item">
-      <div class="sub-heading">
-        Preparatory School current parent enquiries:
-      </div>
-      <div class="text">
-        <div (click)="dialNumber('0121 454 2401')"> 0121 454 2401 </div>
-        <a href="mailto:prep@edgbastonhigh.co.uk" class="mailto"> prep@edgbastonhigh.co.uk </a>
-      </div>
-    </div>
-
-    <div class="contact-last-item">
-      <div class="sub-heading">
-        Senior School current parent enquiries:
-      </div>
-      <div class="text">
-        <div (click)="dialNumber('0121 454 5831')"> 0121 454 5831 </div>
-        <a href="mailto:enquiries@edgbastonhigh.co.uk" class="mailto"> enquiries@edgbastonhigh.co.uk </a>
-      </div>
-    </div>
-  </div>
+  <table class="opening-hours" border="0">
+    <tr><td>Monday</td><td>10-5pm</td></tr>
+    <tr><td>Tuesday</td><td>10-5pm</td></tr>
+    <tr><td>Wednesday</td><td>10-5pm</td></tr>
+    <tr><td>Thursday</td><td>10-5pm</td></tr>
+    <tr><td>Friday</td><td>10-5pm</td></tr>
+    <tr><td>Saturday</td><td>10- 5pm</td></tr>
+    <tr><td>Sunday</td><td>CLOSED</td></tr>
+  </table>
 
   <div class="app-version" (click)="countClicks()">
-    V - {{appVersionNumber}}<br />
+    App Version: {{appVersionNumber}}<br />
   </div>
 
 </ion-content>
