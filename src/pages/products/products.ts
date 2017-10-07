@@ -33,7 +33,7 @@ export class ProductsPage {
   showList: boolean = false;
 
   hasDataItems: boolean = false;
-  dataItems: any[];
+  dataItems: any = [];
   itemImage: any = [];
   itemComments: any = [];
   itemCommentsCount: any = [];
@@ -74,36 +74,41 @@ export class ProductsPage {
   displayDataItems()
   // Shows all of the items that match the given keywords
   {
-    this.dataProvider.getItems().then((data) => {
-      console.log('ProductsPage: displayDataItems: dataService.getItems() returned: ' + JSON.stringify(data));
+    this.dataProvider.getItems().then((data:any) => {
+      //console.log('ProductsPage: displayDataItems: dataService.getItems() returned: ' + JSON.stringify(data));
 
-      let numItems = Object.keys(data).length;
+      let numItems: number = Object.keys(data).length;
+      let countOfFilteredItems: number = 0;
 
       console.log('ProductsPage: displayDataItems(): numItems = ' + numItems);
 
       if (numItems !== 0) {
         this.hasDataItems = true;
-        this.dataItems = data;
+        //this.dataItems = data;
 
         // Go through changing the edit date of each Plan from iso format to the format we want and add associated immages to array.
         for (let i = 0; i < numItems; i++) {
 
           // Don't include this entry if it doesn't match the keyword
-          console.log('+++++ this.dataItems[i].itemType = ' + this.dataItems[i].itemType + ', this.keyword = ' + this.keyword
-            + ', this.dataItems[i].itemType.indexOf(this.keyword) = ' + this.dataItems[i].itemType.indexOf(this.keyword));
-          if (this.keyword != 'ALL' && this.keyword != '' && this.dataItems[i].itemType.indexOf(this.keyword) == -1) {
-            this.dataItems.splice(i,1);
-            i = i - 1;
-            numItems = numItems - 1;
+          //console.log('+++++ this.dataItems[i].itemType = ' + this.dataItems[i].itemType + ', this.keyword = ' + this.keyword
+          //  + ', this.dataItems[i].itemType.indexOf(this.keyword) = ' + this.dataItems[i].itemType.indexOf(this.keyword));
+          if (this.keyword != 'ALL' && this.keyword != '' && data[i].itemType.indexOf(this.keyword) == -1) {
+            //this.dataItems.splice(i,1);
+            //i = i - 1;
+            //numItems = numItems - 1;
             continue;
           }
+          else {
+            this.dataItems.push(data[i]);
+            countOfFilteredItems++;
+          }
 
-          this.dataItems[i].updated = moment(this.dataItems[i].updated).format('MMM Do YYYY');
+          this.dataItems[countOfFilteredItems-1].updated = moment(this.dataItems[countOfFilteredItems-1].updated).format('MMM Do YYYY');
 
           // Initialise itemImage array entry in preparation for being filled by displayMedia
           this.itemImage.push({'type':'', 'media':''});
           // Put media items in the itemImage array
-          this.displayMedia(i, this.dataItems[i].media[0]);
+          this.displayMedia(countOfFilteredItems-1, this.dataItems[countOfFilteredItems-1].media[0]);
 /*
           // Initialise itemComments array entry in preparation for being filled by displayMedia
           this.itemComments.push({'type':'', 'media':''});

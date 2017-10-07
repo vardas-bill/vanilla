@@ -16,7 +16,11 @@ export class LocalStorageProvider {
   constructor(public nativeStorage: NativeStorage)
   {
     console.log('Hello LocalStorageProvider');
+  }
 
+
+  init()
+  {
     // Get the user's current list of pins (the IDs of the pinned items) and put in pins variable
     this.nativeStorage.getItem('pins')
       .then(
@@ -31,7 +35,6 @@ export class LocalStorageProvider {
         }
       );
   }
-
 
   // ========
   // PINS

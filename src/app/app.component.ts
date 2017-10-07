@@ -17,6 +17,7 @@ import { DataProvider } from '../providers/data';
 import { AuthenticationProvider } from '../providers/authentication';
 import { CommonFunctionsProvider } from '../providers/common-functions';
 import { ConnectivityService } from '../providers/connectivity-service';
+import { LocalStorageProvider } from '../providers/local-storage';
 
 import { OneSignal } from '@ionic-native/onesignal';
 
@@ -45,6 +46,7 @@ export class VanillaApp {
               public commonFunctionsProvider: CommonFunctionsProvider,
               public dataProvider: DataProvider,
               public authenticationProvider: AuthenticationProvider,
+              public localStorageProvider: LocalStorageProvider,
               public nativeStorage: NativeStorage,
               public connectivityService: ConnectivityService,
               public alertCtrl: AlertController,
@@ -101,6 +103,9 @@ export class VanillaApp {
       if (this.platform.is('cordova'))
       {
         console.log('VanillaApp: Running on a Cordova device');
+
+        // Setup list of pins etc. in LocalStorageProvider
+        this.localStorageProvider.init();
 
         //this.oneSignal.setLogLevel({logLevel: 6, visualLevel: 4});
         // NOTE: To test this on Android we MUST build the APK file and install on an Android phone
@@ -159,7 +164,7 @@ export class VanillaApp {
         }
         else { // We are running via ionic serve
           this.dataProvider.init(null);
-          this.commonFunctionsProvider.isAdminUser = true;
+          //this.commonFunctionsProvider.isAdminUser = true;
           //this.dataProvider.init('1234'); // :TO DO: :TEMP: Allows us to add products using ionic serve
         }
         //this.nav.setRoot(HomePage);

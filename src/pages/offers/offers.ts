@@ -29,7 +29,7 @@ export class OffersPage {
   showList: boolean = false;
 
   hasDataItems: boolean = false;
-  dataItems: any[];
+  dataItems: any = [];
   itemImage: any = [];
   itemComments: any = [];
   itemCommentsCount: any = [];
@@ -73,36 +73,46 @@ export class OffersPage {
   // Shows all of the items that have special offers
   {
     this.dataProvider.getItems().then((data) => {
-      console.log('PinsPage: displayDataItems: dataService.getItems() returned: ' + JSON.stringify(data));
+      //console.log('OffersPage: displayDataItems: dataService.getItems() returned: ' + JSON.stringify(data));
 
-      let numItems = Object.keys(data).length;
+      let numItems : number = Object.keys(data).length;
+      let countOfFilteredItems: number = 0;
 
-      console.log('PinsPage: displayDataItems(): numItems = ' + numItems);
+      console.log('OffersPage: displayDataItems(): numItems = ' + numItems);
 
       if (numItems !== 0) {
         this.hasDataItems = true;
-        this.dataItems = data;
+        //this.dataItems = data;
 
         // Go through changing the edit date of each Plan from iso format to the format we want and add associated images to array.
         for (let i = 0; i < numItems; i++) {
 
           // Don't include this item if it doesn't have a special offer
-          if (!this.dataItems[i].specialOffer) {
-            this.dataItems.splice(i,1);
-            i = i - 1;
-            numItems = numItems - 1;
+          if (!data[i].specialOffer) {
+            //this.dataItems.splice(i,1);
+            //i = i - 1;
+            //numItems = numItems - 1;
             continue;
           }
+          else {
+            this.dataItems.push(data[i]);
+            countOfFilteredItems++;
+          }
 
-          this.dataItems[i].updated = moment(this.dataItems[i].updated).format('MMM Do YYYY');
+          this.dataItems[countOfFilteredItems-1].updated = moment(this.dataItems[countOfFilteredItems-1].updated).format('MMM Do YYYY');
 
           // Initialise itemImage array entry in preparation for being filled by displayMedia
           this.itemImage.push({'type':'', 'media':''});
-          this.displayMedia(i, this.dataItems[i].media[0]);
+          this.displayMedia(countOfFilteredItems-1, this.dataItems[countOfFilteredItems-1].media[0]);
 
+
+          this.dataItems[i].updated = moment(this.dataItems[i].updated).format('MMM Do YYYY');
+
+          /*
           // Initialise itemComments array entry in preparation for being filled by displayMedia
           this.itemComments.push({'type':'', 'media':''});
-          this.displayComments(i, this.dataItems[i]._id);
+          this.displayComments(countOfFilteredItems-1, this.dataItems[countOfFilteredItems-1]._id);
+          */
         }
 
         if (this.dataItems.length < 1) {
@@ -123,7 +133,7 @@ export class OffersPage {
       else {
         this.hasDataItems = false;
         this.dataItems = [];
-        console.log("PinsPage: displayItems() - No items to show");
+        console.log("OffersPage: displayItems() - No items to show");
       }
 
       return;
@@ -136,16 +146,16 @@ export class OffersPage {
   displayMedia(itemIndex, annotationID)
   // Adds an item's image to the itemImage[] array
   {
-    console.log('PinsPage: displayMedia(): Called with itemIndex = ' + itemIndex + ', ' + annotationID);
+    console.log('OffersPage: displayMedia(): Called with itemIndex = ' + itemIndex + ', ' + annotationID);
 
     // Get every step so it can be shown
     this.dataProvider.getAnnotation(annotationID).then((annotation)=>
     {
       if (annotation) {
         this.itemImage[itemIndex] = annotation[0];
-        console.log('PinsPage: displayMedia(): itemImage array after getting annotation is now: ' + JSON.stringify(this.itemImage));
+        //console.log('OffersPage: displayMedia(): itemImage array after getting annotation is now: ' + JSON.stringify(this.itemImage));
       }
-      else console.log('PinsPage: displayMedia(): getAnnotation: NO annotation returned ');
+      else console.log('OffersPage: displayMedia(): getAnnotation: NO annotation returned ');
     });
   }
 
@@ -154,18 +164,18 @@ export class OffersPage {
   displayComments(itemIndex, itemID)
   // Gets the comments for the given item
   {
-    console.log('PinsPage: displayComments(): Called with itemIndex = ' + itemIndex + ', and itemID = ' + itemID);
+    console.log('OffersPage: displayComments(): Called with itemIndex = ' + itemIndex + ', and itemID = ' + itemID);
 
     // Get every comment so it can be shown
     this.dataProvider.getComments(itemID).then((comments)=>{
       if (comments) {
-        console.log('PinsPage: displayComments(): number of comments found is = ' + comments.length);
+        console.log('OffersPage: displayComments(): number of comments found is = ' + comments.length);
         this.itemCommentsCount[itemIndex] = comments.length;
         // Put array of comments in most recent first order
         this.itemComments[itemIndex] = comments.reverse();
       }
       else {
-        console.log('PinsPage: getComments(): No comments found ');
+        console.log('OffersPage: getComments(): No comments found ');
         this.itemCommentsCount[itemIndex] = 0;
       }
     });
@@ -203,7 +213,7 @@ export class OffersPage {
   addItem()
   // Shows the ItemCreatePage for adding a new item
   {
-    console.log('PinsPage: addItem()');
+    console.log('OffersPage: addItem()');
     let addModal = this.modalCtrl.create(ItemCreatePage);
     addModal.onDidDismiss(item => {
       // Refresh the display
@@ -217,7 +227,7 @@ export class OffersPage {
   editItem(item)
   // Shows the ItemEditPage to let user edit an item
   {
-    console.log('PinsPage: editItem(): itemID = ' + item._id);
+    console.log('OffersPage: editItem(): itemID = ' + item._id);
     let addModal = this.modalCtrl.create(ItemEditPage, {'itemID':item._id});
     addModal.onDidDismiss(item => {
       // Refresh the display
@@ -231,7 +241,7 @@ export class OffersPage {
   deleteItem(item)
   // Deletes an item
   {
-    console.log('PinsPage: deleteItem()');
+    console.log('OffersPage: deleteItem()');
     let alert = this.alertCtrl.create({
       title: 'Delete item',
       message: 'Are you sure you want to permanently delete this?',
@@ -263,7 +273,7 @@ export class OffersPage {
   openItem(item, itemImage)
   // Goes to the item details page
   {
-    console.log('PinsPage: openItem()');
+    console.log('OffersPage: openItem()');
     this.navCtrl.push(ItemDetailPage, {
       item: item,
       itemImage: itemImage

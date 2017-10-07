@@ -4,6 +4,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import { Platform, ToastController, AlertController, Events} from 'ionic-angular';
 
 import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Rx';
 import PouchDB from 'pouchdb';
 
 //import CryptoPouch from 'crypto-pouch';
@@ -33,7 +34,8 @@ import * as moment from 'moment';
 @Injectable()
 export class DataProvider {
 
-  data:                       any;
+  data:                       any = null; // Filled by getItems()
+  dataHasChanged:             boolean = false;
   _userDB:                    any;
   _remoteUserDB:              any;
   _productDB:                 any;
@@ -41,6 +43,8 @@ export class DataProvider {
   encryptKey:                 string = '';
   remote:                     any;
   syncHandler:                any;
+
+  subscription;
 
   // Array of field names used by the encryption functions to determine which fields need to be JSON.stringified
   // All the fields listed in this array will be passed through JSON.stringify (encrypt) and JOSN.parse (decrypt)
@@ -55,7 +59,19 @@ export class DataProvider {
               public nativeStorage: NativeStorage,
               public platform: Platform,
               public events: Events) {
+    // Check for changes to the DB every 12 hours and update the data shown if it has
+    this.subscription = Observable.interval(1000 * 60 * 60 * 12).subscribe(x => {
+      console.log ('DataProvider: Constructor: Observable.interval(): dataHasChanged = ' + this.dataHasChanged);
 
+      // Passing true to getItems forces it to get the items from PouchDB afresh
+      if (this.dataHasChanged) this.getItems(true).then((result)=>{
+        // Tell the pages there is new data
+        this.events.publish('NEW_DATA_AVAILABLE', true);
+      });
+
+      // Reset the dataHasChanged flag
+      this.dataHasChanged = false;
+    });
   }
 
 
@@ -177,6 +193,9 @@ export class DataProvider {
         continuous: true
       };
 
+
+      // REPLICATE TO REMOTE (if admin user)
+      //
       // If the user is an admin replicate TO the remoteDB so that new items, edited items, and deleted items can be saved
       if (adminPassword != null) {
         console.log('***** DATA: init() ADMIN so about to do a replicate.to');
@@ -226,6 +245,8 @@ export class DataProvider {
       }
 
 
+      // REPLICATE FROM REMOTE
+      //
       // Replicate from remote DB to local DB (do one off sync first (so we know when we have received all the data) then a live continuous sync)
       this._productDB.replicate.from(this._remoteProductDB) //No options here -> One time sync
         .on('complete', (info) => {
@@ -234,19 +255,21 @@ export class DataProvider {
           //this.events.publish('SYNC_FINISHED', true); // Let login etc. know we have synced the data
           this._productDB.replicate.from(this._remoteProductDB, options) //Continous sync with options
             .on('complete', (info) => {
-              console.log('***** DATA: init() *productDB* Complete: Handling syncing complete');
+              console.log('***** DATA: init() *productDB* Complete: Handling replicate complete');
               console.dir(info);
             })
             .on('change', (info) => {
-              console.log('***** DATA: init() *productDB* Change: Handling syncing change');
+              console.log('***** DATA: init() *productDB* Change: Handling replicate change');
               console.dir(info);
+              this.dataHasChanged = true;
+              this.events.publish('DATA_CHANGE', true);
             })
             .on('paused', (info) => {
               console.log('***** DATA: init() *productDB* Paused: Handling second replicate.from pause');
               console.dir(info);
             })
             .on('active', (info) => {
-              console.log('***** DATA: init() *productDB* Active: Handling syncing resumption');
+              console.log('***** DATA: init() *productDB* Active: Handling replicate resumption');
               console.dir(info);
             })
             .on('error', (err) => {
@@ -363,10 +386,16 @@ export class DataProvider {
 
 
 
-  getItems()
+  getItems(forceRefresh:boolean = false)
   // Get all of items (products)
+  // If forceRefresh is true get items from PouchDB
+  // If forceRefresh is false return the existing contents of this.data (unless it is null in which case we get from PouchDB)
   {
-    return this._productDB.allDocs({
+    if (this.data != null && !forceRefresh) return new Promise(resolve => {
+      console.log('DataProvider: getItems(): forceRefresh = ' + forceRefresh + ', and this.data = ' + this.data);
+      resolve(this.data)
+    });
+    else return this._productDB.allDocs({
       include_docs: true,
       startkey: 'ITEM:',
       endkey: 'ITEM:\uffff',
@@ -390,7 +419,10 @@ export class DataProvider {
           else
             items.push(item);
         }
-        console.log('Data: getItems(): returning: ' + JSON.stringify(items));
+
+        //console.log('Data: getItems(): returning: ' + JSON.stringify(items));
+
+        this.data = items;
         return items;
       })
       .catch((err)=>{

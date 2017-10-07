@@ -29,7 +29,7 @@ export class PinsPage {
   showList: boolean = false;
 
   hasDataItems: boolean = false;
-  dataItems: any[];
+  dataItems: any = [];
   itemImage: any = [];
   itemComments: any = [];
   itemCommentsCount: any = [];
@@ -75,39 +75,46 @@ export class PinsPage {
     this.dataProvider.getItems().then((data) => {
       console.log('PinsPage: displayDataItems: dataService.getItems() returned: ' + JSON.stringify(data));
 
-      let numItems = Object.keys(data).length;
+      let numItems: number = Object.keys(data).length;
+      let countOfFilteredItems: number = 0;
 
       console.log('PinsPage: displayDataItems(): numItems = ' + numItems);
 
       if (numItems !== 0) {
         this.hasDataItems = true;
-        this.dataItems = data;
+        //this.dataItems = data;
 
         // Go through changing the edit date of each Plan from iso format to the format we want and add associated images to array.
         for (let i = 0; i < numItems; i++) {
 
           // Don't include this item if it isn't pinned
-          if (this.localStorageProvider.pins.indexOf(this.dataItems[i]._id) == -1) {
-            this.dataItems.splice(i,1);
-            i = i - 1;
-            numItems = numItems - 1;
+          if (this.localStorageProvider.pins.indexOf(data[i]._id) == -1) {
+            //this.dataItems.splice(i,1);
+            //i = i - 1;
+            //numItems = numItems - 1;
             continue;
           }
+          else {
+            this.dataItems.push(data[i]);
+            countOfFilteredItems++;
+          }
 
-          this.dataItems[i].updated = moment(this.dataItems[i].updated).format('MMM Do YYYY');
+          this.dataItems[countOfFilteredItems-1].updated = moment(this.dataItems[countOfFilteredItems-1].updated).format('MMM Do YYYY');
 
           // Initialise itemImage array entry in preparation for being filled by displayMedia
           this.itemImage.push({'type':'', 'media':''});
-          this.displayMedia(i, this.dataItems[i].media[0]);
+          this.displayMedia(countOfFilteredItems-1, this.dataItems[countOfFilteredItems-1].media[0]);
 
+          /*
           // Initialise itemComments array entry in preparation for being filled by displayMedia
           this.itemComments.push({'type':'', 'media':''});
-          this.displayComments(i, this.dataItems[i]._id);
+          this.displayComments(countOfFilteredItems-1, this.dataItems[countOfFilteredItems-1]._id);
+          */
         }
 
         if (this.dataItems.length < 1) {
           let toast = this.toastCtrl.create({
-            message: "You don't have anything pinned yet. You can pin and unpin products using the pin at the top of the product's details page.",
+            message: "You don't have anything pinned yet. You can pin and unpin products using the pin at the top of the product page.",
             duration: 5000,
             position: 'top'
           });
@@ -143,7 +150,7 @@ export class PinsPage {
     {
       if (annotation) {
         this.itemImage[itemIndex] = annotation[0];
-        console.log('PinsPage: displayMedia(): itemImage array after getting annotation is now: ' + JSON.stringify(this.itemImage));
+        //console.log('PinsPage: displayMedia(): itemImage array after getting annotation is now: ' + JSON.stringify(this.itemImage));
       }
       else console.log('PinsPage: displayMedia(): getAnnotation: NO annotation returned ');
     });

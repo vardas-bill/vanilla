@@ -1,0 +1,16 @@
+.ios, .md {
+
+  page-about {
+
+    .background {
+      //background-image: url($company-home-page-background-image);
+      background-color: $company-about-page-background-color;//#3F434C;
+      background-size: cover;
+      height: 105%;
+      //margin-top: -20px;
+      z-index: 0;
+    }
+
+  }
+
+}

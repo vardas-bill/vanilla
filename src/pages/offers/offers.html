@@ -36,7 +36,7 @@
 
   <ion-spinner *ngIf="showLoadingSpinner" color="white" class="loading-spinner" name="crescent"></ion-spinner>
 
-  <ion-row class="layout-style-buttons-row">
+  <ion-row *ngIf="isAdminUser" class="layout-style-buttons-row">
     <ion-col col-4 text-center>
       <button [style.opacity]="showGrid ? '1.0':'0.5'" ion-button class="layout-style-button" small icon-left (click)="showAsGrid()">
         IMAGES &nbsp; <ion-icon name="md-grid"></ion-icon>
@@ -54,6 +54,18 @@
     </ion-col>
   </ion-row>
 
+  <ion-row *ngIf="!isAdminUser" class="layout-style-buttons-row">
+    <ion-col col-6 text-center>
+      <button [style.opacity]="showGrid ? '1.0':'0.5'" ion-button class="layout-style-button" small icon-left (click)="showAsGrid()">
+        IMAGES &nbsp; <ion-icon name="md-grid"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-6 text-center>
+      <button [style.opacity]="showCards ? '1.0':'0.5'" ion-button class="layout-style-button" small icon-left (click)="showAsCards()">
+        CARDS &nbsp; <ion-icon name="ios-photos"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
 
 
   <!-- CARDS VIEW -->
