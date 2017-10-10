@@ -95,10 +95,13 @@ export class PinsPage {
             //this.dataItems.splice(i,1);
             //i = i - 1;
             //numItems = numItems - 1;
+            console.log('@@@@@@ item number i not pinned where i = ' + i);
             continue;
           }
           else {
             this.dataItems[countOfFilteredItems] = data[i];
+            console.log('@@@@@@ countOfFilteredItems = ' + countOfFilteredItems +
+            'this.dataItems[countOfFilteredItems].title = ' + this.dataItems[countOfFilteredItems].title);
             countOfFilteredItems++;
           }
 
@@ -125,6 +128,11 @@ export class PinsPage {
 
           this.localStorageProvider.doneNoPinsMessage();
         }
+        // Trim the this.dataItems array if it is longer than the countOfFilteredItems (which can happen if an item has been unpinned)
+        else if (this.dataItems.length > countOfFilteredItems) {
+          this.dataItems = this.dataItems.slice(0, countOfFilteredItems);
+        }
+
         //this.showProducts = true;
         setTimeout(()=>{
           this.showProducts = true;

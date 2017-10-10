@@ -148,7 +148,7 @@ export class ProductsPage {
     {
       if (annotation) {
         this.itemImage[itemIndex] = annotation[0];
-        console.log('ProductsPage: displayMedia(): itemImage array after getting annotation is now: ' + JSON.stringify(this.itemImage));
+        //console.log('ProductsPage: displayMedia(): itemImage array after getting annotation is now: ' + JSON.stringify(this.itemImage));
       }
       else console.log('ProductsPage: displayMedia(): getAnnotation: NO annotation returned ');
     });
