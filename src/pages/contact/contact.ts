@@ -15,7 +15,18 @@ import { CommonFunctionsProvider } from '../../providers/common-functions';
 export class ContactPage {
 
   appVersionNumber: any;
-  secretClickCount: number = 0;
+
+  /* EHS App test code!!
+  testImg: string = "http://edgbastonhigh.co.uk/SM4/Mutable/Uploads/sm3_emu_main_image/ac1-(9)-thumb.jpg"
+  theHtmlString: string = '<p>Wednesday 3rd May saw Year 11’s last day in school before embarking on their study leave in ' +
+    'preparation for their GCSE examinations. The day started with a continental breakfast of coffee and pastries and a ' +
+    'review of their time through Senior School. After much shirt signing, cake eating and selfies the day ended with the ' +
+    'annual emptying of lockers.</p><p>Mrs Campbell, Mrs Mooney, Miss Glover, Mr Lane, Mr Wilkins and Ms Johnson would like ' +
+    'to wish all of the girls in Year 11 the very best of luck for their examinations. It has been a busy year and they have ' +
+    'all worked extremely hard.</p><p>Mrs Cirillo-Campbell<br />Head of Year 11</p>  ' +
+    '<p style="text-align:center">' +
+    '<img alt="" border="0" height="428" hspace="0" src="http://ehs.red-wing.com/SM4/Mutable/Uploads/textarea_converted/content199cb4c4d04b7830de6f2aa418fb216a/entity_body/1493972671/image_0.jpg" style="width: 530px; height: 428px; margin: 0px; border: 0px solid black;" vspace="0" width="530" /></p><p> </p><p> </p>'
+  */
 
   constructor(public callNumber: CallNumber,
               public commonFunctionsProvider: CommonFunctionsProvider,
@@ -40,7 +51,6 @@ export class ContactPage {
   ionViewDidEnter()
   {
     console.log('ContactsPage: ionViewDidEnter()');
-    this.secretClickCount = 0;
   }
 
 
@@ -53,46 +63,6 @@ export class ContactPage {
       .catch(() => console.log('Error launching dialer'));
   }
 
-
-  countClicks()
-  {
-    this.secretClickCount++;
-
-    // Seven clicks means this might be an admin user
-    if (this.secretClickCount == 7) {
-      this.secretClickCount = 0;
-      let prompt = this.alertCtrl.create({
-        title: 'Password',
-        message: "Enter password to access additional features. Leave password field empty if you want to stop seeing additional features.",
-        inputs: [
-          {
-            name: 'password',
-            placeholder: 'password'
-          },
-        ],
-        buttons: [
-          {
-            text: 'Cancel',
-            handler: data => {
-              console.log('Cancel clicked');
-            }
-          },
-          {
-            text: 'Save Password',
-            handler: data => {
-              //alert('Password = ' + data.password);
-              this.nativeStorage.setItem('adminPassword', data.password)
-                .then(
-                  () => {},
-                  error => {}
-                );
-            }
-          }
-        ]
-      });
-      prompt.present();
-    }
-  }
 
   companyFacebook()
   {

@@ -3,7 +3,7 @@
   <ion-navbar class="product-navbar">
 
     <ion-buttons left>
-      <button ion-button class="navbar_left_button" (click)="ehsWeb()">
+      <button ion-button class="navbar_left_button">
         <img src="assets/img/square_logo.png" class="toolbar-logo">
       </button>
     </ion-buttons>
@@ -39,17 +39,17 @@
   <ion-row *ngIf="isAdminUser" class="layout-style-buttons-row">
     <ion-col col-4 text-center>
       <button [style.opacity]="showGrid ? '1.0':'0.5'" ion-button class="layout-style-button" small icon-left (click)="showAsGrid()">
-        IMAGES &nbsp; <ion-icon name="md-grid"></ion-icon>
+        <ion-icon name="md-grid"></ion-icon>
       </button>
     </ion-col>
     <ion-col col-4 text-center>
       <button [style.opacity]="showCards ? '1.0':'0.5'" ion-button class="layout-style-button" small icon-left (click)="showAsCards()">
-        CARDS &nbsp; <ion-icon name="ios-photos"></ion-icon>
+        <ion-icon name="ios-photos"></ion-icon>
       </button>
     </ion-col>
     <ion-col col-4 text-center>
       <button [style.opacity]="showList ? '1.0':'0.5'" ion-button class="layout-style-button" small icon-left (click)="showAsList()">
-        LIST &nbsp; <ion-icon name="md-list"></ion-icon>
+        <ion-icon name="md-list"></ion-icon>
       </button>
     </ion-col>
   </ion-row>
@@ -57,12 +57,12 @@
   <ion-row *ngIf="!isAdminUser" class="layout-style-buttons-row">
     <ion-col col-6 text-center>
       <button [style.opacity]="showGrid ? '1.0':'0.5'" ion-button class="layout-style-button" small icon-left (click)="showAsGrid()">
-        IMAGES &nbsp; <ion-icon name="md-grid"></ion-icon>
+         &nbsp; <ion-icon name="md-grid"></ion-icon>
       </button>
     </ion-col>
     <ion-col col-6 text-center>
       <button [style.opacity]="showCards ? '1.0':'0.5'" ion-button class="layout-style-button" small icon-left (click)="showAsCards()">
-        CARDS &nbsp; <ion-icon name="ios-photos"></ion-icon>
+         &nbsp; <ion-icon name="ios-photos"></ion-icon>
       </button>
     </ion-col>
   </ion-row>
@@ -142,7 +142,7 @@
 
 
   <!-- GRID LAYOUT STYLE -->
-  <ion-grid *ngIf="showGrid">
+  <ion-grid *ngIf="showProducts && showGrid">
     <ion-row>
       <ion-col col-6 col-md-4 col-xl-3 *ngFor="let item of dataItems; let i = index">
         <div *ngIf="itemImage[i].type == 'PHOTO'" (click)="openItem(item, itemImage[i])">

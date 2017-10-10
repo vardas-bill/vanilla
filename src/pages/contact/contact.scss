@@ -1,6 +1,10 @@
 .ios, .md {
   page-contact {
 
+    .test-img {
+      max-width: 50%;
+    }
+
     ion-content {
       background-color: $company-contact-page-background-color;
     }
@@ -81,11 +85,6 @@
     .opening-hours {
       margin-left: 14px;
       margin-top: 10px;
-    }
-    .app-version {
-      margin-top: 50px;
-      padding-bottom: 10px;
-      padding-left: 14px;
     }
   }
 }

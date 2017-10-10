@@ -95,7 +95,7 @@ export class OffersPage {
             continue;
           }
           else {
-            this.dataItems.push(data[i]);
+            this.dataItems[countOfFilteredItems] = data[i];
             countOfFilteredItems++;
           }
 

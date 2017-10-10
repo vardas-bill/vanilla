@@ -8,7 +8,7 @@
 
   <ion-navbar>
     <ion-buttons left>
-      <button ion-button class="navbar_left_button" (click)="ehsWeb()">
+      <button ion-button class="navbar_left_button" (click)="digWeb()">
         <img src="assets/img/square_logo.png" class="toolbar-logo">
       </button>
     </ion-buttons>
@@ -62,6 +62,13 @@
 
   Photo by Emma Lewis
 
-  <br /><br /><br /><br /><br />
+  <div class="app-version" (click)="countClicks()">
+    Version: {{appVersionNumber}}<br />
+  </div>
+  <div class="app-author">
+    App developed by:
+    <a href="mailto:info@vardas.com" class="mailto">Vardas Consultancy Ltd</a><br />
+  </div>
+  <br /><br /><br />
 
 </ion-content>

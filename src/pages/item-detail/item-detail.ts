@@ -99,7 +99,7 @@ export class ItemDetailPage {
   togglePin()
   // Toggles whether or not this item is pinned
   {
-    if (this.pinned) this.localStorageProvider.addPin(this.item._id);
+    if (!this.pinned) this.localStorageProvider.addPin(this.item._id);
     else this.localStorageProvider.removePin(this.item._id);
     this.pinned = !this.pinned;
   }

@@ -16,9 +16,9 @@ export const REMOTE_SERVER = false;
 
 
 // LOCAL TEST SERVER (For testing via App running on a device)
-export var SUPERLOGIN_SERVER = 'http://fa7c4ed1.ngrok.io';
-export var COUCHDB_SERVER = 'http://fd6cbc73.ngrok.io';
-export var COUCHDB_SERVER_URL = 'fd6cbc73.ngrok.io';
+export var SUPERLOGIN_SERVER = 'http://be52071a.ngrok.io';
+export var COUCHDB_SERVER = 'http://be52071a.ngrok.io';
+export var COUCHDB_SERVER_URL = 'be52071a.ngrok.io';
 export var REMOTE_SERVER = false;
 export const COUCHDB_PASSWORD = '';
 export const COUCHDB_USER = '';

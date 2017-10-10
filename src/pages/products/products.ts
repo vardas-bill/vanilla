@@ -74,6 +74,9 @@ export class ProductsPage {
   displayDataItems()
   // Shows all of the items that match the given keywords
   {
+    //this.dataItems = [];
+    //this.itemImage = [];
+
     this.dataProvider.getItems().then((data:any) => {
       //console.log('ProductsPage: displayDataItems: dataService.getItems() returned: ' + JSON.stringify(data));
 
@@ -99,7 +102,7 @@ export class ProductsPage {
             continue;
           }
           else {
-            this.dataItems.push(data[i]);
+            this.dataItems[countOfFilteredItems] = data[i];
             countOfFilteredItems++;
           }
 

@@ -72,6 +72,9 @@ export class PinsPage {
   displayDataItems()
   // Shows all of the items that have been pinned
   {
+    //this.dataItems = [];
+    //this.itemImage = [];
+
     this.dataProvider.getItems().then((data) => {
       console.log('PinsPage: displayDataItems: dataService.getItems() returned: ' + JSON.stringify(data));
 
@@ -95,7 +98,7 @@ export class PinsPage {
             continue;
           }
           else {
-            this.dataItems.push(data[i]);
+            this.dataItems[countOfFilteredItems] = data[i];
             countOfFilteredItems++;
           }
 
@@ -112,13 +115,15 @@ export class PinsPage {
           */
         }
 
-        if (this.dataItems.length < 1) {
+        if (this.dataItems.length < 1 && this.localStorageProvider.showNoPinsMessage()) {
           let toast = this.toastCtrl.create({
             message: "You don't have anything pinned yet. You can pin and unpin products using the pin at the top of the product page.",
             duration: 5000,
             position: 'top'
           });
           toast.present();
+
+          this.localStorageProvider.doneNoPinsMessage();
         }
         //this.showProducts = true;
         setTimeout(()=>{
