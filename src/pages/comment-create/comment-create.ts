@@ -1,12 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { NavController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, ViewController } from 'ionic-angular';
 
 import { Camera } from 'ionic-native';
 
 import { DataProvider } from '../../providers/data';
 import { MediaProvider } from '../../providers/media';
 
+@IonicPage()
 @Component({
   selector: 'page-comment-create',
   templateUrl: 'comment-create.html'

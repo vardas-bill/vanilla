@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 
+/*
 import { ItemDetailPage } from '../item-detail/item-detail';
 import { ItemCreatePage } from '../item-create/item-create';
 import { ItemEditPage } from '../item-edit/item-edit';
+*/
 
 import { DataProvider } from '../../providers/providers';
 import { CommonFunctionsProvider } from '../../providers/common-functions';
@@ -14,12 +16,7 @@ import { APP_NAME } from '../../app/app.settings';
 
 import * as moment from 'moment';
 
-/*
-  Generated class for the Cards page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
+@IonicPage()
 @Component({
   selector: 'page-products',
   templateUrl: 'products.html'
@@ -212,7 +209,7 @@ export class ProductsPage {
   // Shows the ItemCreatePage for adding a new item
   {
     console.log('ProductsPage: addItem()');
-    let addModal = this.modalCtrl.create(ItemCreatePage);
+    let addModal = this.modalCtrl.create('ItemCreatePage');
     addModal.onDidDismiss(item => {
       // Refresh the display
       this.displayDataItems();
@@ -226,7 +223,7 @@ export class ProductsPage {
   // Shows the ItemEditPage to let user edit an item
   {
     console.log('ProductsPage: editItem(): itemID = ' + item._id);
-    let addModal = this.modalCtrl.create(ItemEditPage, {'itemID':item._id});
+    let addModal = this.modalCtrl.create('ItemEditPage', {'itemID':item._id});
     addModal.onDidDismiss(item => {
       // Refresh the display
       this.displayDataItems();
@@ -272,7 +269,7 @@ export class ProductsPage {
   // Show the ItemDetailPage for the given item
   {
     console.log('ProductsPage: openItem()');
-    this.navCtrl.push(ItemDetailPage, {
+    this.navCtrl.push('ItemDetailPage', {
       item: item,
       itemImage: itemImage
     });

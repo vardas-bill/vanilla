@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ToastController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ToastController, ModalController } from 'ionic-angular';
 
+/*
 import { ItemDetailPage } from '../item-detail/item-detail';
 import { ItemCreatePage } from '../item-create/item-create';
 import { ItemEditPage } from '../item-edit/item-edit';
+*/
 
 import { DataProvider } from '../../providers/providers';
 import { CommonFunctionsProvider } from '../../providers/common-functions';
@@ -15,7 +17,7 @@ import { APP_NAME } from '../../app/app.settings';
 
 import * as moment from 'moment';
 
-
+@IonicPage()
 @Component({
   selector: 'page-pins',
   templateUrl: 'pins.html'
@@ -227,7 +229,7 @@ export class PinsPage {
   // Shows the ItemCreatePage for adding a new item
   {
     console.log('PinsPage: addItem()');
-    let addModal = this.modalCtrl.create(ItemCreatePage);
+    let addModal = this.modalCtrl.create('ItemCreatePage');
     addModal.onDidDismiss(item => {
       // Refresh the display
       this.displayDataItems();
@@ -241,7 +243,7 @@ export class PinsPage {
   // Shows the ItemEditPage to let user edit an item
   {
     console.log('PinsPage: editItem(): item = ' + item._id);
-    let addModal = this.modalCtrl.create(ItemEditPage, {'itemID':item._id});
+    let addModal = this.modalCtrl.create('ItemEditPage', {'itemID':item._id});
     addModal.onDidDismiss(item => {
       // Refresh the display
       this.displayDataItems();
@@ -287,7 +289,7 @@ export class PinsPage {
   // Goes to the item details page
   {
     console.log('PinsPage: openItem()');
-    this.navCtrl.push(ItemDetailPage, {
+    this.navCtrl.push('ItemDetailPage', {
       item: item,
       itemImage: itemImage
     });

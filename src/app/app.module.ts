@@ -13,6 +13,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { VanillaApp } from './app.component';
 
+/*
 import { TabsPage } from '../pages/tabs/tabs';
 import { AboutPage } from '../pages/about/about';
 import { HomePage } from '../pages/home/home';
@@ -27,6 +28,7 @@ import { ItemCreatePage } from '../pages/item-create/item-create';
 import { ItemEditPage } from '../pages/item-edit/item-edit';
 import { CommentCreatePage } from '../pages/comment-create/comment-create';
 import { ItemDetailPage } from '../pages/item-detail/item-detail';
+*/
 
 //import { Settings } from '../providers/settings';
 import { AuthenticationProvider } from '../providers/authentication';
@@ -55,8 +57,9 @@ export function createTranslateLoader(http: Http) {
  * can find them. As you add and remove pages, make sure to keep this list up to date.
  */
 let pages = [
-  TabsPage,
+  //TabsPage,
   VanillaApp,
+  /*
   AboutPage,
   ProductsPage,
   PinsPage,
@@ -70,6 +73,7 @@ let pages = [
   ItemEditPage,
   CommentCreatePage,
   HomePage
+  */
 ];
 
 export function declarations() {

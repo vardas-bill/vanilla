@@ -5,6 +5,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
 
 import { CommonFunctionsProvider } from '../../providers/common-functions'
 
+@IonicPage()
 @Component({
   selector: 'page-about',
   templateUrl: 'about.html',

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, App, Platform} from 'ionic-angular';
+import { IonicPage, NavController, AlertController, App, Platform} from 'ionic-angular';
 
 import { CallNumber } from '@ionic-native/call-number';
 import { AppVersion } from '@ionic-native/app-version';
@@ -7,7 +7,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
 
 import { CommonFunctionsProvider } from '../../providers/common-functions';
 
-
+@IonicPage()
 @Component({
   selector: 'page-contact',
   templateUrl: 'contact.html'

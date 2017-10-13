@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, ToastController } from 'ionic-angular';
 import { SecureStorage } from 'ionic-native';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { checkFirstCharacterValidator } from '../validators/custom-validators';
 
+/*
 import { LoginPage } from '../../pages/login/login';
 import { HomePage } from '../../pages/home/home';
+*/
 
 import { DataProvider } from '../../providers/data';
 import { AuthenticationProvider } from '../../providers/authentication';
@@ -14,6 +16,7 @@ import { ConnectivityService } from '../../providers/connectivity-service';
 
 import { APP_NAME, SKIP_SECURESTORAGE, ENCRYPT_DATA } from '../../app/app.settings';
 
+@IonicPage()
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html'
@@ -107,7 +110,7 @@ export class SignupPage {
 
           this.showLoadingSpinner = false;
 
-          this.navCtrl.setRoot(HomePage);
+          this.navCtrl.setRoot('HomePage');
 
         }
         else {
@@ -157,6 +160,6 @@ export class SignupPage {
   login()
   // Show the login page
   {
-    this.navCtrl.setRoot(LoginPage);
+    this.navCtrl.setRoot('LoginPage');
   }
 }

@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
-import { NavController, Events, Platform, AlertController, ToastController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, Events, Platform, AlertController, ToastController, NavParams } from 'ionic-angular';
 
 import { AppVersion } from '@ionic-native/app-version';
 import { NativeStorage } from '@ionic-native/native-storage';
 
+/*
 import { LoginPage } from '../login/login';
 import { SignupPage } from '../signup/signup';
 import { ListMasterPage } from '../list-master/list-master';
 import { HomePage } from '../home/home';
+*/
 
 import { ConnectivityService } from '../../providers/connectivity-service';
 import { DataProvider } from '../../providers/data';
@@ -21,6 +23,8 @@ import { APP_NAME, SKIP_SECURESTORAGE, ENCRYPT_DATA, DO_LOGIN } from '../../app/
  * If you'd like to immediately put the user onto a login/signup page,
  * we recommend not using the Welcome page.
 */
+
+@IonicPage()
 @Component({
   selector: 'page-welcome',
   templateUrl: 'welcome.html'
@@ -128,7 +132,7 @@ export class WelcomePage {
                        this.showLoadingSpinner = false;
                        this.events.unsubscribe('SYNC_FINISHED', null);
                        console.log('***** WelcomePage: inializeApp(): SYNC_FINISHED event');
-                       this.navCtrl.setRoot(HomePage);
+                       this.navCtrl.setRoot('HomePage');
                      });
                 }
                 else {
@@ -166,7 +170,7 @@ export class WelcomePage {
                 // Initialise the database
                 this.dataProvider.init();//this.usersEmail, false);
 
-                this.navCtrl.setRoot(HomePage);
+                this.navCtrl.setRoot('HomePage');
               }
 
           },
@@ -188,12 +192,12 @@ export class WelcomePage {
 
 
   login() {
-    this.navCtrl.setRoot(LoginPage);
+    this.navCtrl.setRoot('LoginPage');
   }
 
 
 
   signup() {
-    this.navCtrl.setRoot(SignupPage);
+    this.navCtrl.setRoot('SignupPage');
   }
 }

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController, Events } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, Events } from 'ionic-angular';
 import { SecureStorage } from 'ionic-native';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { SignupPage } from '../../pages/signup/signup';
+//import { SignupPage } from '../../pages/signup/signup';
 
 import { AuthenticationProvider } from '../../providers/authentication';
 import { ConnectivityService } from '../../providers/connectivity-service';
@@ -12,6 +12,7 @@ import { HomePage } from '../home/home';
 
 import { APP_NAME, SKIP_SECURESTORAGE, ENCRYPT_DATA } from '../../app/app.settings';
 
+@IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html'
@@ -147,6 +148,6 @@ export class LoginPage {
   register()
   // Show the register page
   {
-    this.navCtrl.setRoot(SignupPage);
+    this.navCtrl.setRoot('SignupPage');
   }
 }

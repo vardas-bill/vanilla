@@ -4,8 +4,8 @@ import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { DataProvider } from '../../providers/data';
 import { CommonFunctionsProvider } from '../../providers/common-functions';
 
-import { ProductsPage } from '../products/products';
-import { SwipePage } from '../swipe/swipe';
+//import { ProductsPage } from '../products/products';
+//import { SwipePage } from '../swipe/swipe';
 
 /*
 This is the main page for the App and is the page from which the
@@ -23,7 +23,7 @@ import {
   PRODUCT_CATEGORY5_SUBCATEGORIES,
   PRODUCT_CATEGORY6_SUBCATEGORIES } from '../../app/app.settings';
 
-
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
@@ -91,22 +91,22 @@ export class HomePage {
     // At some point we will let some of the HomePage category buttons point to pages other than the ProductsPage
     switch (categoryButton) {
       case 0:
-        this.navCtrl.push(ProductsPage, info);
+        this.navCtrl.push('ProductsPage', info);
         break;
       case 1:
-        this.navCtrl.push(ProductsPage, info);
+        this.navCtrl.push('ProductsPage', info);
         break;
       case 2:
-        this.navCtrl.push(ProductsPage, info);
+        this.navCtrl.push('ProductsPage', info);
         break;
       case 3:
-        this.navCtrl.push(ProductsPage, info);
+        this.navCtrl.push('ProductsPage', info);
         break;
       case 4:
-        this.navCtrl.push(ProductsPage, info);
+        this.navCtrl.push('ProductsPage', info);
         break;
       case 5:
-        this.navCtrl.push(ProductsPage, info);
+        this.navCtrl.push('ProductsPage', info);
         break;
     }
   }

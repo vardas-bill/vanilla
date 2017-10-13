@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 
 import { CommentCreatePage } from '../comment-create/comment-create';
 
@@ -9,7 +9,7 @@ import { LocalStorageProvider } from '../../providers/local-storage';
 
 import { CommonFunctionsProvider } from '../../providers/common-functions';
 
-
+@IonicPage()
 @Component({
   selector: 'page-item-detail',
   templateUrl: 'item-detail.html'

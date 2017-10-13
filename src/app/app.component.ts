@@ -6,12 +6,14 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { AppVersion } from '@ionic-native/app-version';
 import { NativeStorage } from '@ionic-native/native-storage';
 
+/*
 import { HomePage } from '../pages/home/home';
 import { ProductsPage } from '../pages/products/products';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { TabsPage } from '../pages/tabs/tabs';
 import { WelcomePage } from '../pages/welcome/welcome';
+*/
 
 import { DataProvider } from '../providers/data';
 import { AuthenticationProvider } from '../providers/authentication';
@@ -30,7 +32,7 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
   templateUrl: 'app.html'
 })
 export class VanillaApp {
-  rootPage:any = TabsPage;
+  rootPage:any = 'TabsPage';
   //rootPage = WelcomePage;
 
   @ViewChild(Nav) nav: Nav;
@@ -136,7 +138,7 @@ export class VanillaApp {
         console.log('VanillaApp: NOT running on Cordova device');
       }
 
-      if (DO_LOGIN) this.nav.setRoot(WelcomePage); // :TO DO: Check login stuff is still working!
+      if (DO_LOGIN) this.nav.setRoot('WelcomePage'); // :TO DO: Check login stuff is still working!
       else {
         // If we aren't making users login we need to initialise the dataProvider here (rather than within the login code)
 
@@ -199,7 +201,7 @@ export class VanillaApp {
   logout()
   {
     this.authenticationProvider.logout();
-    this.nav.setRoot(WelcomePage);
+    this.nav.setRoot('WelcomePage');
   }
 
 

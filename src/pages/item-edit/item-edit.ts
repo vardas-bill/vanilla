@@ -1,12 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { NavController, ViewController, NavParams, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, ViewController, NavParams, AlertController, ToastController } from 'ionic-angular';
 
 import { Camera } from 'ionic-native';
 
 import { DataProvider } from '../../providers/data';
 import { MediaProvider } from '../../providers/media';
 
+@IonicPage()
 @Component({
   selector: 'page-item-edit',
   templateUrl: 'item-edit.html'
