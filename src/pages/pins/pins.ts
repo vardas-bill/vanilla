@@ -105,7 +105,10 @@ export class PinsPage {
             countOfFilteredItems++;
           }
 
-          this.dataItems[countOfFilteredItems-1].updated = moment(this.dataItems[countOfFilteredItems-1].updated).format('MMM Do YYYY');
+          let date = this.dataItems[countOfFilteredItems-1].updated;
+          let momentDate = moment(date);
+          this.dataItems[countOfFilteredItems-1].updated = momentDate.utc().format('MMM Do YYYY');
+          //this.dataItems[countOfFilteredItems-1].updated = moment(this.dataItems[countOfFilteredItems-1].updated).format('MMM Do YYYY');
 
           // Initialise itemImage array entry in preparation for being filled by displayMedia
           this.itemImage.push({'type':'', 'media':''});

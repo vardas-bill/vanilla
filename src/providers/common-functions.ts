@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AlertController} from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 import { FB_LINK, TW_LINK, INSTAGRAM_LINK } from '../app/app.settings';
 
 import moment from 'moment';
@@ -16,6 +18,7 @@ export class CommonFunctionsProvider {
   isAdminUser: boolean = false;
 
   constructor(public alertCtrl: AlertController,
+              public inAppBrowser: InAppBrowser,
               public platform: Platform) {
 
   }
@@ -54,20 +57,20 @@ export class CommonFunctionsProvider {
 
   gotoFacebook()
   {
-    window.open(FB_LINK, '_system', 'location=no');
+    const browser = this.inAppBrowser.create(FB_LINK, '_system');//, 'location=no');
   }
 
 
 
   gotoTwitter()
   {
-    window.open(TW_LINK, '_system', 'location=no');
+    const browser = this.inAppBrowser.create(TW_LINK, '_system');//, 'location=no');
   }
 
 
   gotoInstagram()
   {
-    window.open(INSTAGRAM_LINK, '_system', 'location=no');
+    const browser = this.inAppBrowser.create(INSTAGRAM_LINK, '_system');//, 'location=no');
   }
 }
 

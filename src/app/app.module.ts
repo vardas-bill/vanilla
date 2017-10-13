@@ -9,6 +9,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CallNumber } from '@ionic-native/call-number';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { VanillaApp } from './app.component';
 
@@ -125,6 +126,7 @@ export function providers() {
     StatusBar,
     SplashScreen,
     NativeStorage,
+    InAppBrowser,
     CallNumber,
     OneSignal,
     Camera,
